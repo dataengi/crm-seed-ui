@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <strong>Invite user</strong>
+      </div>
+      <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()">
+        <div class="card-block">
+          <div class="row">
+            <div class="form-group"
+                 [ngClass]="{'col-sm-12': isAllowCreateCompany, 'col-md-6': isAllowCreateCompany, 'col-sm-8': !isAllowCreateCompany}">
+              <label for="email">Email Input</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"
+                     formControlName="email">
+            </div>
+
+            <div class="form-group col-sm-6 col-md-3" *ngIf="ps.isAllow(ps.actions.CreateCompany)">
+              <label for="company">Company</label>
+
+              <select id="company" name="company" class="form-control" size="1" formControlName="companyId">
+                <option value="" disabled selected>Please select company</option>
+                <option *ngFor="let company of companies" value="{{company.id}}">{{company.name}}</option>
+              </select>
+              <button type="button" class="btn btn-sm btn-link" (click)="createCompany()">Add new company
+              </button>
+            </div>
+
+            <div class="form-group"
+                 [ngClass]="{'col-sm-6': isAllowCreateCompany, 'col-md-3': isAllowCreateCompany, 'col-sm-4': !isAllowCreateCompany}">
+              <label for="role">Role</label>
+
+              <select id="role" name="role" class="form-control" size="1" formControlName="roleId">
+                <option value="" disabled selected>Please select role</option>
+                <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!inviteForm.valid">
+            <i class="fa fa-dot-circle-o"></i> Send invite
+          </button>
+          <button type="button" class="btn btn-sm btn-danger" (click)="onClean()"><i class="fa fa-ban"></i> Clean
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<crm-invites-list [invites]="invites" [isRoot]="isAllowCreateCompany"></crm-invites-list>

@@ -1,0 +1,19 @@
+<div class="card modal-card">
+
+    <div class="row">
+
+      <div class="col-md-1 pre-img">
+        <label class="custom-file-input">
+          <input id="custom-input" type="file" (change)="fileChangeListener($event)">
+        </label>
+        <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+
+      </div>
+
+      <div class="col-md-1 cropped-img" *ngIf="data.image">
+        <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+        <button class="btn btn-primary m-t-65" (click)="onSave()">Select image</button>
+      </div>
+    </div>
+
+</div>

@@ -1,0 +1,49 @@
+.pre-img {
+  min-width: 400px;
+  margin: 20px;
+}
+
+.cropped-img {
+  min-width: 300px;
+  margin: 20px;
+}
+
+.m-t-65 {
+  margin-top: 65px;
+}
+
+.custom-file-input {
+  display: inline-block;
+  position: absolute;
+  color: #FFF;
+  left: 40px;
+  top: 20px;
+}
+
+.custom-file-input input {
+  visibility: hidden;
+  width: 100px;
+}
+
+.custom-file-input:before {
+  content: 'Open folder';
+  display: block;
+  background-color: #20a8d8;
+  padding: 5px 0px;
+  outline: none;
+  white-space: nowrap;
+  cursor: pointer;
+  color: #FFF;
+  text-shadow: 1px 1px rgba(000, 000, 000, 0.5);
+  font-weight: bold;
+  text-align: center;
+  font-size: 10pt;
+}
+
+.custom-file-input:hover:before {
+  border-color: #febf01;
+}
+
+.custom-file-input:active:before {
+  background: #02b0e6;
+}

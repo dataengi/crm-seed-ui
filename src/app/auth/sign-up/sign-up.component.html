@@ -1,0 +1,37 @@
+<div class="app flex-row align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card mx-2">
+          <div class="card-block p-2">
+            <h1>Register</h1>
+            <p class="text-muted">Create your account for email: {{email}}</p>
+
+            <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+
+              <small *ngIf="signUpForm.controls.pass.dirty && signUpForm.controls.pass.errors" class="form-text text-danger">
+                Password must be at least 6 characters</small>
+              <div class="input-group mb-1">
+                            <span class="input-group-addon"><i class="icon-lock"></i>
+                            </span>
+                <input type="password" class="form-control" placeholder="Password" formControlName="pass">
+              </div>
+
+              <small class="form-text text-danger" *ngIf="showNotEqual">Passwords do not match!</small>
+              <div class="input-group mb-2">
+                            <span class="input-group-addon"><i class="icon-lock"></i>
+                            </span>
+                <input type="password" class="form-control" placeholder="Repeat password" formControlName="repeat">
+              </div>
+
+
+              <button type="submit" class="btn btn-block btn-success" [disabled]="!signUpForm.valid || !passIsEqual">
+                Create Account
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

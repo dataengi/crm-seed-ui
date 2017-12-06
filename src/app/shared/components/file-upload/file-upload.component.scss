@@ -1,0 +1,65 @@
+.my-drop-zone { border: dotted 3px lightgray; }
+.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+.another-file-over-class { border: dotted 3px green; }
+
+
+.file-upload-container {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.file-upload-label {
+  margin: 0;
+}
+
+
+input[type="file"] {
+  display: none;
+}
+
+.files-td {
+  padding: 3px;
+}
+
+.action-padding {
+  padding: 0 5px;
+}
+
+.table-custom {
+  margin-bottom: 0;
+}
+
+.progress-custom {
+  margin-bottom: 5px;
+}
+
+.col-md-1 {
+  min-width: 150px;
+}
+
+.col-md-11 {
+  max-width: calc(100% - 150px);
+}
+
+.not-uploaded {
+  color: #f63c3a;
+}
+
+.is-uploaded {
+  color: #4dbd74;
+}
+
+.uploading {
+  color: #20a8d8;
+}
+
+.file-name {
+  max-width: 0;
+  min-width: 50%;
+}
+
+.status {
+  width: 100px;
+}

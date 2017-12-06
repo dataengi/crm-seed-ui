@@ -1,0 +1,5 @@
+<div class="form-error" *ngIf="control && !control.valid && (control.dirty || control.touched)">
+  <div *ngFor="let error of errors">
+    <span *ngIf="control.hasError(error.name)">{{error.message}} </span>
+  </div>
+</div>

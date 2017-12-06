@@ -1,0 +1,26 @@
+<div class="btn-group" role="group" dropdown>
+
+  <!--<button class="btn btn-link text-muted" dropdownToggle>-->
+  <!--<span class="fa fa-group fa-lg"></span>-->
+  <!--</button>-->
+  <div dropdownToggle class="text-muted">
+    <ng-content></ng-content>
+  </div>
+
+
+  <div class="dropdown-menu search-dropdown" [class.dropdown-menu-right]="right" bs-dropdown-menu>
+
+    <form [formGroup]="searchForm" class="form-horizontal">
+      <input type="text"
+             class="form-control"
+             placeholder="Start typing here for search..."
+             formControlName="text"
+            (click)="$event.stopPropagation()"
+      >
+    </form>
+
+    <button class="dropdown-item btn btn-link" *ngFor="let item of filteredItems" (click)="onSelect(item)">
+      <p [innerHTML]="item.text" class="select-item"></p>
+    </button>
+  </div>
+</div>

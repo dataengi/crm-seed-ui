@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-md-1 col-sm-12" *ngIf="!readonly">
+    <button type="button" (click)="toggleShowLinks()" class="btn btn-link add-link-button" *ngIf="!showAddLinkInput">Add
+      link
+    </button>
+    <button type="button" (click)="toggleShowLinks()" class="btn btn-link add-link-button" *ngIf="showAddLinkInput">Hide
+      link input
+    </button>
+  </div>
+
+  <div class="col-sm-12" [ngClass]="{'col-md-11': !readonly, 'col-md-12': readonly}">
+    <table class="table table-custom" *ngIf="haveLinks()">
+      <thead>
+      <tr>
+        <th class="links-td">Link</th>
+        <th class="links-td" width="80"><!--Actions--></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let link of links">
+        <td class="links-td text-truncate link-name" #linkNode>{{link}}</td>
+        <td class="links-td">
+          <div class="pull-right">
+            <button type="button"
+                    class="btn btn-link text-muted action-padding"
+                    title="Copy link to clipboard"
+                    (click)="onCopyLink(linkNode)">
+              <span class="fa fa-copy fa-lg"></span>
+            </button>
+            <button type="button"
+                    class="btn btn-link text-muted action-padding"
+                    title="Delete link" *ngIf="!readonly"
+                    (click)="onDeleteLink(link)">
+              <span class="fa fa-trash fa-lg"></span>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="row" *ngIf="showAddLinkInput">
+      <div class="input-group col-sm-12">
+        <input type="text"
+               class="form-control"
+               placeholder="Link"
+               [(ngModel)]="newLink"
+               (keyup.enter)="onAddNewLink()">
+        <span class="input-group-btn">
+                    <button type="button"
+                            class="btn btn-primary"
+                            title="Add link"
+                            [disabled]="!isNewLink()"
+                            (click)="onAddNewLink()">
+                    <span class="fa fa-plus fa-md"></span> Add
+                  </button>
+                  </span>
+      </div>
+    </div>
+  </div>
+
+</div>

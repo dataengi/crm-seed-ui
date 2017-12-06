@@ -1,0 +1,16 @@
+$dropdown-width: 280px;
+
+.toggle-div {
+  width: 100%;
+}
+
+.search-dropdown {
+  width: $dropdown-width;
+}
+
+.select-item {
+  margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
+}

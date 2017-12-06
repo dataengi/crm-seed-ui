@@ -1,0 +1,171 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12" [class.col-md-9]="showGroups">
+      <div class="card">
+        <div class="card-block">
+          <div class="row margin-row-bottom">
+            <div class="col-sm-4">
+              <h4 class="card-title mb-0">Contacts <span *ngIf="!isOwner">({{contactsOwnerEmail}})</span></h4>
+            </div>
+            <div class="col-sm-8">
+              <div class="pull-right">
+                <div class="btn-group" *ngIf="isSomeSelected() && isOwner" crmDropdown>
+
+                  <button class="btn btn-link text-muted" title="Add to group" (click)="onAddToGroup()">
+                    <span class="fa fa-group fa-lg"></span>
+                  </button>
+
+                  <div class="dropdown-menu dropdown-menu-right groups-search-dropdown">
+
+                    <form [formGroup]="searchGroupForm" class="form-horizontal">
+                      <input type="text"
+                             class="form-control"
+                             placeholder="Start typing group name..."
+                             formControlName="group">
+                    </form>
+
+                    <button class="dropdown-item btn btn-link"
+                            *ngFor="let group of filteredGroups"
+                            (click)="addSelectedToGroup(group.id)">{{group.name}}
+                    </button>
+                  </div>
+                </div>
+
+                <button class="btn btn-link text-muted" title="Delete selected contacts"
+                        (click)="onDeleteSelectedContacts()" *ngIf="isSomeSelected() && isOwner">
+                  <span class="fa fa-trash fa-lg"></span>
+                </button>
+
+                <button type="button" class="btn btn-primary" (click)="openContact(newState, $event)" *ngIf="isOwner"><i
+                  class="icon-plus"></i> Add contact
+                </button>
+
+                <button type="button" class="btn btn-default" *ngIf="!showGroups" (click)="switchGroup()">Groups <span
+                  class="icon-arrow-left"></span></button>
+                <button type="button" class="btn btn-default" *ngIf="showGroups" (click)="switchGroup()">Groups <span
+                  class="icon-arrow-right"></span></button>
+              </div>
+            </div>
+          </div>
+          <div class="text-primary" *ngIf="!!selectedGroup">
+            <div class="h5 text-primary m-b-0 m-t-h">
+              Group "{{selectedGroup.name}}"
+              <button class="btn btn-default" (click)="showAll()">Show all contacts</button>
+            </div>
+
+          </div>
+          <table class="table table-hover table-outline m-b-0 hidden-sm-down">
+            <thead class="thead-default">
+            <tr>
+              <th width="12">
+                <input type="checkbox" id="all" class="form-control th-input" name="allContacts"
+                       (change)="selectAll($event)" [checked]="isSomeSelected()">
+              </th>
+              <th>
+                <a (click)="contactsFilterData.orderById()" class="cursor-pointer"> Id
+                  <span *ngIf="contactsFilterData.isOrderedById()"
+                        class="fa" [ngClass]="caretClass()">
+                  </span>
+                </a>
+              </th>
+              <th>
+                <a (click)="contactsFilterData.orderByName()" class="cursor-pointer"> Name
+                  <span *ngIf="contactsFilterData.isOrderedByName()"
+                        class="fa" [ngClass]="caretClass()">
+                  </span>
+                </a>
+              </th>
+              <th>
+                <a (click)="contactsFilterData.orderByCompany()" class="cursor-pointer"> Company
+                  <span *ngIf="contactsFilterData.isOrderedByCompany()"
+                        class="fa" [ngClass]="caretClass()">
+
+                  </span>
+                </a>
+              </th>
+              <th>
+                Phone
+              </th>
+              <th>
+                Email
+              </th>
+              <th width="140" class="text-right">
+                <button class="btn btn-link text-muted action-padding" title="Filter contacts" (click)="toggleShowFilter()">
+                  <span class="fa fa-filter fa-lg"></span>
+                </button>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr *ngIf="isShowFilters">
+              <th class="th-padding">
+              </th>
+              <th class="th-padding" width="50">
+                <input type="number" class="form-control" [(ngModel)]="contactsFilterData.id" title="id" placeholder="Id">
+              </th>
+              <th class="th-padding">
+                <input type="text" class="form-control" [(ngModel)]="contactsFilterData.name" title="name" placeholder="Name">
+              </th>
+              <th class="th-padding">
+                <input type="text" class="form-control" [(ngModel)]="contactsFilterData.company" title="company" placeholder="Company">
+              </th>
+              <th class="th-padding">
+                <input type="text" class="form-control" [(ngModel)]="contactsFilterData.phone" title="phone" placeholder="Phone">
+              </th>
+              <th class="th-padding">
+                <input type="text" class="form-control" [(ngModel)]="contactsFilterData.email" title="email" placeholder="Email">
+              </th>
+              <th width="140" class="th-padding"></th>
+            </tr>
+
+            <tr *ngFor="let contact of contacts | contactsFilter : contactsFilterData"
+                (click)="openContact(detailState, $event, contact)"
+                title="Click for detail">
+
+              <td (click)="$event.stopPropagation()">
+                <input type="checkbox"
+                       id="{{contact.id}}"
+                       name="contacts"
+                       value="{{contact.id}}"
+                       (change)="onSelectChange($event, contact.id)"
+                       [checked]="isSelected(contact.id)">
+              </td>
+
+              <td>{{contact.id}}</td>
+              <td><a>{{contact.name}}</a></td>
+              <td class="text-centred">{{contact.company}}</td>
+              <td class="text-centred">{{contact.phones[0]?.phone}}</td>
+              <td class="text-centred">{{contact.emails[0]?.email}}</td>
+              <td class="text-right">
+                <button class="btn btn-link text-muted action-padding" title="Edit contact"
+                        (click)="openContact(editState, $event, contact)" *ngIf="isOwner">
+                  <span class="fa fa-pencil fa-lg"></span>
+                </button>
+                <button class="btn btn-link text-muted action-padding" title="Delete contact"
+                        (click)="deleteContact(contact, $event)" *ngIf="isOwner">
+                  <span class="fa fa-trash fa-lg"></span>
+                </button>
+                <button class="btn btn-link text-muted action-padding" title="Delete from group"
+                        (click)="onRemoveContactFromGroup(contact, $event)" *ngIf="!!selectedGroup && isOwner">
+                  <span class="fa fa-close fa-lg"></span>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12" [class.col-md-3]="showGroups" *ngIf="showGroups">
+      <crm-contact-groups [groups]="groups"
+                          [contactsBookId]="contactsBookId"
+                          [isOwner]="isOwner"
+                          (newGroupEvent)="addGroup($event)"
+                          (editGroupEvent)="editGroup($event)"
+                          (deleteGroupEvent)="deleteGroup($event)"
+                          (filterEvent)="filterByGroup($event)">
+      </crm-contact-groups>
+    </div>
+  </div>
+</div>

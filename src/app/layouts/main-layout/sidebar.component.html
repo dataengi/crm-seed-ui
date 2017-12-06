@@ -1,0 +1,29 @@
+<div class="sidebar">
+  <nav class="sidebar-nav">
+    <ul class="nav">
+
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/contacts']"><i class="icon-people"></i>Contacts</a>
+      </li>
+
+      <li class="nav-item nav-dropdown" routerLinkActive="open" *ngIf="showAdmin">
+        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-star"></i> Admin</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item" *ngIf="showInvites">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/admin', 'invites']">
+              <i class="icon-puzzle"></i> Invites</a>
+          </li>
+          <li class="nav-item" *ngIf="showUsers">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/admin', 'users']">
+              <i class="icon-user"></i> Users</a>
+          </li>
+          <li class="nav-item" *ngIf="showRoot">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/root']">
+              <i class="icon-user"></i> Root</a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+  </nav>
+</div>

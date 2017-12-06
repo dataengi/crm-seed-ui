@@ -1,0 +1,101 @@
+<div class="animated fadeIn">
+
+  <div class="row">
+    <div class="col-xl-3 col-lg-5 col-md-6 col-sm-12 col-xs-12">
+
+
+      <div class="card">
+
+        <div class="card-block">
+          <form [formGroup]="profileForm">
+
+            <div class="row">
+              <div class="col-sm-12 edit-img-container">
+                <button type="button" class="btn btn-link edit-img" (click)="onChangeAvatar()"><span
+                  class="fa fa-lg fa-pencil"></span> Edit
+                </button>
+                <img [src]="profileForm.value.avatarUrl" width="100%">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label> Email</label>
+                  <input type="text" class="form-control" readonly [value]="profile.user.email"
+                         title="{{profile.user.email}}">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="nickname">Nickname</label>
+                  <input type="text"
+                         class="form-control"
+                         id="nickname"
+                         placeholder="Enter your nickname"
+                         formControlName="nickname">
+                  <crm-form-error [control]="profileForm.controls.nickname"
+                                  [errors]="[{name: 'required', message: 'Nickname is required'},
+                                  {name: 'invalidNickname', message: 'Nickname is not valid'},
+                                  {name: 'alreadyExist', message: 'Nickname already used'}]"></crm-form-error>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="first-name">First name</label>
+                  <input type="text"
+                         class="form-control"
+                         id="first-name"
+                         placeholder="First name"
+                         formControlName="firstName">
+                  <crm-form-error [control]="profileForm.controls.firstName"
+                                  [errors]="[{name: 'maxlength', message: 'First name too long'}]"></crm-form-error>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="last-name">Last name</label>
+                  <input type="text"
+                         class="form-control"
+                         id="last-name"
+                         placeholder="Last name"
+                         formControlName="lastName">
+                  <crm-form-error [control]="profileForm.controls.lastName"
+                                  [errors]="[{name: 'maxlength', message: 'Last name too long'}]"></crm-form-error>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="last-name"> Role </label>
+                  <input type="text" class="form-control" readonly [value]="profile.user.role.name"
+                         title="{{profile.user.role.name}}">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-primary" (click)="saveProfile()" [disabled]="!profileForm.valid">Save</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

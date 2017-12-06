@@ -1,0 +1,20 @@
+<div class="card modal-card">
+  <div class="card-header">
+    Create company
+  </div>
+  <div class="card-block">
+
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Company name</span>
+          <input type="text" id="name" name="name" class="form-control" [(ngModel)]="companyName">
+        </div>
+      </div>
+
+      <div class="form-group form-actions">
+        <button type="button" class="btn btn-sm btn-primary" (click)="create()" [disabled]="!companyName">Create</button>
+        <button type="button" class="btn btn-sm btn-danger" (click)="cancel()">Cancel</button>
+      </div>
+
+  </div>
+</div>

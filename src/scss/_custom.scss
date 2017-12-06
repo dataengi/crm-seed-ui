@@ -1,0 +1,126 @@
+// Here you can add other styles
+.input-group-addon, .input-group-btn {
+  min-width: 80px;
+}
+
+.required >label:after {
+  color: #e32;
+  content: ' *';
+  display: inline;
+}
+
+.required label.file-upload-label:after {
+  color: #e32;
+  content: ' ';
+  display:inline;
+}
+.no-padding {
+  padding: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+body:not(.top-nav) .sidebar ul.nav li.nav-item.nav-dropdown.open > ul, body:not(.top-nav) .sidebar ul.nav li.nav-item.nav-dropdown.open > ol {
+  background-color: #304047;
+}
+
+body:not(.top-nav) .sidebar ul.nav li.nav-item.nav-dropdown.open a.nav-drop-item-link {
+  padding-left: 32px;
+}
+
+body:not(.top-nav) .sidebar ul.nav li.nav-item a.nav-link.active {
+  background-color: #20a8d8;
+}
+
+.modal-card {
+  margin-bottom: 0;
+}
+
+.min-width-100 {
+  min-width: 120px;
+}
+
+.low-padding {
+  padding: 5px !important;
+}
+
+.ui-select-multiple .ui-select-match-item {
+  padding: 2px;
+}
+
+.size-medium {
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.a-none {
+  text-decoration: none;
+  cursor: pointer;
+
+  &:visited, &:hover, &:active {
+    text-decoration: none;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.dropdown-toggle-after-none::after {
+  display: none;
+  content: "";
+}
+
+.crm-dropdown-item {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+//datePickerSelect
+.custom-select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  color: #607d8b;
+  background-color: #fff;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+//form control valid
+.check.ng-dirty.ng-valid, .check.ng-touched.ng-valid {
+  border-color: #4dbd74;
+}
+
+.check.ng-dirty.ng-invalid, .check.ng-touched.ng-invalid {
+  border-color: #f86c6b;
+}
+
+.badge-big-size {
+  font-size: 20px;
+}
+
+.margin10 {
+  margin: 10px;
+}
+
+.break-all-word {
+  -ms-word-break: break-all;
+  word-break: break-all;
+}
+
+.wrap-break-word {
+  word-wrap: break-word;
+}

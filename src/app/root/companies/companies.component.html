@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-block">
+
+
+    <table class="table table-hover table-outline m-b-0">
+      <thead class="thead-default">
+      <tr>
+        <th>Company name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let company of companies">
+        <td class="text-xs-center">
+          <a [routerLink]="['/root', 'company', company.id]">{{company.name}}</a>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>

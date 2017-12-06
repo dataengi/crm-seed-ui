@@ -1,0 +1,419 @@
+<div class="card modal-card">
+  <div class="card-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div *ngIf="isNew()">
+      <span><b>New contact</b></span>
+    </div>
+    <div *ngIf="isEdit()">
+      <span><b>Edit contact</b></span>
+    </div>
+    <div *ngIf="isDetail()">
+      <span><b>Details</b></span>
+    </div>
+  </div>
+
+  <form class="form-horizontal" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <div class="card-block">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+
+          <div class="form-group row required">
+            <label class="col-sm-3 form-control-label"><strong>Name:</strong></label>
+            <div class="col-sm-9 col-no-padding">
+              <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                {{contactForm.value.name}}
+              </p>
+
+              <input type="text" id="name" name="name"
+                     class="form-control form-control-modal"
+                     placeholder="Full name"
+                     formControlName="name"
+                     *ngIf="isForm()">
+
+              <crm-form-error [control]="contactForm.controls.name"
+                              [errors]="[{'name': 'required', message: 'Name is required'},
+                              {name: 'maxlength', message: 'Name is too long'}]"></crm-form-error>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label"><strong>Company:</strong></label>
+            <div class="col-sm-9 col-no-padding">
+              <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                {{contactForm.value.company}}
+              </p>
+
+              <input type="text" id="company" name="company"
+                     class="form-control form-control-modal"
+                     placeholder="Company"
+                     formControlName="company"
+                     *ngIf="isForm()">
+
+              <crm-form-error [control]="contactForm.controls.company"
+                              [errors]="[fieldTooLongError]"></crm-form-error>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label"><strong>Position:</strong></label>
+            <div class="col-sm-9 col-no-padding">
+              <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                {{contactForm.value.jobPosition}}
+              </p>
+
+              <input type="text" id="jobPosition" name="jobPosition"
+                     class="form-control form-control-modal"
+                     placeholder="Job position"
+                     formControlName="jobPosition" *ngIf="isForm()">
+
+              <crm-form-error [control]="contactForm.controls.jobPosition"
+                              [errors]="[fieldTooLongError]"></crm-form-error>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label"><strong>Language:</strong></label>
+            <div class="col-sm-9 col-no-padding">
+              <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                {{contactForm.value.language}}
+              </p>
+
+              <input type="text" id="language" name="language"
+                     class="form-control form-control-modal"
+                     placeholder="Language"
+                     formControlName="language"
+                     *ngIf="isForm()">
+
+              <crm-form-error [control]="contactForm.controls.language"
+                              [errors]="[fieldTooLongError]"></crm-form-error>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label"><strong>Time zone:</strong></label>
+            <div class="col-sm-9 col-no-padding">
+              <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                {{contactForm.value.timeZone}}
+              </p>
+
+              <input type="text" id="timeZone" name="timeZone"
+                     class="form-control form-control-modal"
+                     placeholder="Time zone"
+                     formControlName="timeZone"
+                     *ngIf="isForm()">
+
+              <crm-form-error [control]="contactForm.controls.timeZone"
+                              [errors]="[fieldTooLongError]"></crm-form-error>
+            </div>
+          </div>
+
+          <div class="form-group row" *ngIf="!isNew()">
+            <label class="col-sm-3 form-control-label"><strong>Groups:</strong></label>
+            <div class="col-sm-9 col-no-padding">
+              <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                <span *ngFor="let group of contact.groups; let i = index">
+                  <span class="badge badge-info">{{group.name}}</span>
+                </span>
+              </p>
+
+              <ng-select
+                [active]="selectedGroupItems"
+                [multiple]="true"
+                [items]="groupsItems"
+                (selected)="onAddGroup($event)"
+                (removed)="onRemoveGroup($event)"
+                placeholder="Select group..."
+                *ngIf="isForm()"></ng-select>
+            </div>
+          </div>
+
+          <hr>
+
+          <div formGroupName="address">
+            <h4><strong>Address</strong></h4>
+
+            <div class="form-group row form-group-no-margin">
+              <label class="col-sm-3 form-control-label"><strong>Street:</strong></label>
+              <div class="col-sm-9 col-no-padding">
+                <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                  {{contactForm.value.address.street}}
+                </p>
+
+                <input type="text" id="street" name="street"
+                       class="form-control form-control-modal"
+                       placeholder="Street"
+                       formControlName="street"
+                       *ngIf="isForm()">
+              </div>
+            </div>
+
+            <div class="form-group row form-group-no-margin">
+              <label class="col-sm-3 form-control-label"><strong>City:</strong></label>
+              <div class="col-sm-9 col-no-padding">
+                <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                  {{contactForm.value.address.city}}
+                </p>
+
+                <input type="text" id="city" name="city"
+                       class="form-control form-control-modal"
+                       placeholder="City"
+                       formControlName="city"
+                       *ngIf="isForm()">
+              </div>
+            </div>
+
+            <div class="form-group row form-group-no-margin">
+              <label class="col-sm-3 form-control-label"><strong>State:</strong></label>
+              <div class="col-sm-9 col-no-padding form-group-no-margin">
+                <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                  {{contactForm.value.address.state}}
+                </p>
+
+                <input type="text" id="state" name="state"
+                       class="form-control form-control-modal"
+                       placeholder="State/Region"
+                       formControlName="state"
+                       *ngIf="isForm()">
+              </div>
+            </div>
+
+            <div class="form-group row form-group-no-margin">
+              <label class="col-sm-3 form-control-label"><strong>Zip code:</strong></label>
+              <div class="col-sm-9 col-no-padding">
+                <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                  {{contactForm.value.address.zipCode}}
+                </p>
+
+                <input type="text" id="zipcode" name="zipcode"
+                       class="form-control form-control-modal"
+                       placeholder="Zip code"
+                       formControlName="zipCode"
+                       *ngIf="isForm()">
+
+                <small class="form-text text-danger no-margin"
+                       *ngIf="address.controls.zipCode.dirty && address.controls.zipCode.errors">
+                  Invalid Zipcode
+                </small>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-sm-12 col-md-6">
+
+          <div formArrayName="emails">
+
+            <div *ngFor="let email of emails.controls; let i = index">
+              <div class="form-group row" [formGroupName]="i"
+                   [class.no-margin-bottom]="email.dirty && email.controls.email.errors">
+
+                <div class="col-md-3 col-sm-12 col-xs-12 required">
+                  <label class="form-control-label"><strong>Email:</strong></label>
+                </div>
+
+                <div class="col-md-5 col-sm-8 col-xs-8 col-no-padding">
+                  <p class="form-control-static form-control-static-modal text-truncate"
+                     crmDblClickCopy
+                     tooltip="Double click for copy"
+                     *ngIf="!isForm()">
+                    {{email.value.email}}
+                  </p>
+
+                  <input type="text"
+                         class="form-control form-control-modal"
+                         placeholder="Email"
+                         formControlName="email"
+                         *ngIf="isForm()">
+
+                  <small *ngIf="email.dirty && email.controls.email.errors"
+                         class="form-text text-danger no-margin">
+                    Invalid Email address
+                  </small>
+                </div>
+
+                <div class="col-md-3 col-sm-4 col-xs-4 col-no-padding" *ngIf="!isForm()">
+                  <p class="form-control-static form-control-static-modal">
+                    <span class="tag tag-default">{{email.value.emailType}}</span>
+                  </p>
+                </div>
+
+                <div class="col-md-3 col-sm-4 col-xs-4 col-no-padding" *ngIf="isForm()">
+                  <select *ngIf="i!==0"
+                          class="form-control form-control-modal"
+                          size="1"
+                          formControlName="emailType">
+                    <option *ngFor="let type of emailTypes" value="{{type}}">{{type}}</option>
+                  </select>
+
+                  <p *ngIf="i===0">
+                    <span class="form-control">Main</span>
+                  </p>
+                </div>
+
+                <div class="col-md-1">
+                  <button type="button"
+                          *ngIf="showDelete(emails.controls)"
+                          class="close pull-right"
+                          title="Delete email"
+                          (click)="deleteEmailField(i)">
+                    <span class="fa fa-trash fa-md"></span>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row row-neg-top-margin" *ngIf="isForm()">
+              <div class="col-xs-12">
+                <button type="button" class="btn btn-link pull-left" (click)="addEmailField()">
+                  <span class="fa fa-plus"> email</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <div formArrayName="phones">
+
+            <div *ngFor="let phone of phones.controls; let i = index">
+              <div class="form-group row required" [formGroupName]="i"
+                   [class.no-margin-bottom]="phone.dirty && phone.controls.phone.errors">
+
+                <label class="col-md-3 col-sm-12 col-xs-12 form-control-label"><strong>Phone:</strong></label>
+
+                <div class="col-md-5 col-sm-8 col-xs-8 col-no-padding">
+                  <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                    {{phone.value.phone}}
+                  </p>
+
+                  <input type="tel" id="phone" name="phone"
+                         class="form-control form-control-modal"
+                         placeholder="Phone "
+                         formControlName="phone"
+                         *ngIf="isForm()">
+
+                  <small *ngIf="phone.dirty && phone.controls.phone.errors"
+                         class="form-text text-danger no-margin"> Invalid Phone number
+                  </small>
+                </div>
+
+                <div class="col-md-2 col-sm-4 col-xs-4 col-no-padding" *ngIf="!isForm()">
+                  <p class="form-control-static form-control-static-modal">
+                    <span class="tag tag-default">{{phone.value.phoneType}}</span>
+                  </p>
+                </div>
+
+                <div class="col-md-3 col-sm-4 col-xs-4 col-no-padding" *ngIf="isForm()">
+                  <select *ngIf="i!==0"
+                          id="phone-type"
+                          name="phone-type"
+                          class="form-control form-control-modal"
+                          size="1"
+                          formControlName="phoneType">
+                    <option *ngFor="let type of phoneTypes" value="{{type}}">{{type}}</option>
+                  </select>
+
+                  <p *ngIf="i===0">
+                    <span class="form-control">Main</span>
+                  </p>
+                </div>
+
+                <div class="col-md-1">
+                  <button *ngIf="showDelete(contactForm.controls['phones'].controls)"
+                          class="close pull-right"
+                          title="Delete phone"
+                          (click)="deletePhoneField(i)">
+                    <span class="fa fa-trash pull-right"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row row-neg-top-margin" *ngIf="isForm()">
+              <div class="col-xs-12">
+                <button type="button" class="btn btn-link pull-left" (click)="addPhoneField()">
+                  <span class="fa fa-plus"> phone</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label"><strong>Skype:</strong></label>
+            <div class="col-sm-8 col-no-padding">
+              <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                {{contactForm.value.skypeId}}
+              </p>
+
+              <input type="text" id="skypeId" name="skypeId"
+                     class="form-control form-control-modal"
+                     placeholder="Skype id"
+                     formControlName="skypeId"
+                     *ngIf="isForm()">
+
+              <crm-form-error [control]="contactForm.controls.skypeId"
+                              [errors]="[fieldTooLongError]"></crm-form-error>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label"><strong>Fax:</strong></label>
+            <div class="col-sm-8 col-no-padding">
+              <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+                {{contactForm.value.fax}}
+              </p>
+
+              <input type="text" id="fax" name="fax"
+                     class="form-control form-control-modal"
+                     placeholder="Fax"
+                     formControlName="fax"
+                     *ngIf="isForm()">
+
+              <crm-form-error [control]="contactForm.controls.fax"
+                              [errors]="[fieldTooLongError]"></crm-form-error>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="form-group row">
+        <label class="col-sm-2 form-control-label" for="note">Notes:</label>
+        <div class="col-sm-10">
+          <p class="form-control-static form-control-static-modal" *ngIf="!isForm()">
+            {{contactForm.value.note}}
+          </p>
+
+          <textarea id="note" name="note" rows="2"
+                    class="form-control"
+                    placeholder="Notes..."
+                    *ngIf="isForm()"
+                    formControlName="note"></textarea>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <div class="text-right">
+        <button type="button" class="btn btn-sm btn-danger" (click)="close()">Close</button>
+        <button type="submit" class="btn btn-sm btn-primary" *ngIf="isNew()" [disabled]="!contactForm.valid">
+          <i class="fa fa-dot-circle-o"></i> Submit
+        </button>
+        <button type="button" class="btn btn-sm btn-primary" *ngIf="isEdit()" [disabled]="!contactForm.valid"
+                (click)="onSave()">
+          <i class="fa fa-dot-circle-o"></i> Save
+        </button>
+        <button type="button" class="btn btn-sm btn-primary" *ngIf="isDetail() && isOwner" (click)="toEdit()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

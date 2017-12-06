@@ -1,0 +1,30 @@
+<header class="app-header navbar">
+  <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>
+  <a class="navbar-brand" href="#"></a>
+
+  <ul class="nav navbar-nav hidden-md-down">
+    <li class="nav-item">
+      <a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>
+    </li>
+    <li class="nav-item px-1">
+      <a class="nav-link" href="#">{{profile?.user?.company?.name}}</a>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav ml-auto">
+    <li class="nav-item dropdown" dropdown>
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+        <img src="{{profile.avatarUrl}}" class="img-avatar" alt="{{profile.nickname}}">
+        <span class="hidden-md-down" *ngIf="profile.firstName && profile.lastName">{{profile.firstName}} {{profile.lastName}}</span>
+        <span class="hidden-md-down" *ngIf="!profile.firstName || !profile.lastName">{{profile.nickname}}</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <a class="dropdown-item" [routerLink]="['/profile']"><i class="fa fa-user"></i> Profile</a>
+        <a class="dropdown-item" href="#" (click)="logout()"><i class="fa fa-lock"></i> Logout</a>
+      </div>
+    </li>
+    <li class="nav-item hidden-md-down">
+      <!--<a class="nav-link navbar-toggler aside-menu-toggler" href="#">&#9776;</a>-->
+    </li>
+  </ul>
+
+</header>

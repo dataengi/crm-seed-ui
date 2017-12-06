@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <i class="fa fa-align-justify"></i> Invitation list
+      </div>
+      <div class="card-block">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Email</th>
+            <th>Expiration date</th>
+            <th *ngIf="isRoot">Company</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th width="15"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let invite of invites">
+            <td>{{invite.email}}</td>
+            <td>{{invite.expiredDate | date:'short'}}</td>
+            <td *ngIf="isRoot">{{invite.company.name}}</td>
+            <td>{{invite.role.name}}</td>
+            <td><span class="badge {{getStatusStyle(invite.status)}}">{{invite.status}}</span></td>
+            <td>
+              <div class="btn-group pull-right" crmDropdown>
+                <button type="button" class="btn btn-link text-muted action-padding" title="Actions"><span
+                  class="icon-options-vertical"></span></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <button class="btn btn-link dropdown-item" (click)="removeInvite(invite)">Delete</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

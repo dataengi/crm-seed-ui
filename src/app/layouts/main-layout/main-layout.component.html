@@ -1,0 +1,40 @@
+<ng-template ngbModalContainer></ng-template>
+<crm-spinner></crm-spinner>
+
+
+<crm-header></crm-header>
+<div class="app-body">
+  <!--CRM sidebar-->
+  <crm-sidebar></crm-sidebar>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb" [hidden]="!showBreadcrumb">
+      <breadcrumbs></breadcrumbs>
+      <!-- Breadcrumb Menu (add when need)-->
+
+      <li class="breadcrumb-menu">
+        <div aria-label="Button group with nested dropdown" class="btn-group" role="group">
+          <!--<a class="btn btn-secondary" href="/docs" target="_blank"><i class="icon-docs"></i> Docs</a>-->
+        </div>
+      </li>
+
+    </ol>
+
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <crm-aside></crm-aside>
+</div>
+
+<footer class="app-footer">
+  CRM &copy; 2017 DataEngi
+  <span class="float-right">{{version}}</span>
+</footer>
+
+<crm-confirm-dialog></crm-confirm-dialog>
+

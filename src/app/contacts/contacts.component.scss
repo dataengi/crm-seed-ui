@@ -1,0 +1,30 @@
+.action-padding {
+  padding: 0 5px;
+}
+
+.th-padding {
+  padding: 2px;
+}
+
+.th-input {
+  background-color: #cfd8dc;
+  border: 0 solid rgba(0, 0, 0, 0.15);
+}
+
+.margin-row-bottom {
+  margin-bottom: 20px;
+}
+
+.groups-search-dropdown {
+  width: 200px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance:textfield;
+}

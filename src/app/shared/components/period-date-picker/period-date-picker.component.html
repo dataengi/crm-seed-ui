@@ -1,0 +1,43 @@
+<div class="form-group row">
+  <div class="col-md-5">
+    <div class="input-group">
+      <input class="form-control"
+             placeholder="From"
+             name="dp"
+             ngbDatepicker
+             #fromDate="ngbDatepicker"
+             [(ngModel)]="from"
+             [minDate]="fromMinDate()"
+             [maxDate]="fromMaxDate()"
+             [firstDayOfWeek]="7"
+             (ngModelChange)="onNavigate()"
+             [readonly]="true">
+
+      <span class="input-group-btn min-width-20">
+          <button class="btn btn-info" type="button" (click)="fromDate.toggle()" [disabled]="readonly"><i
+            class="fa fa-calendar"></i></button>
+        </span>
+    </div>
+  </div>
+
+  <div class="col-md-2 form-control-label"></div>
+  <div class="col-md-5">
+    <div class="input-group">
+      <input class="form-control"
+             placeholder="To"
+             name="dp"
+             ngbDatepicker
+             #toDate="ngbDatepicker"
+             [(ngModel)]="to"
+             [minDate]="toMinDate()"
+             [maxDate]="toMaxDate()"
+             [firstDayOfWeek]="7"
+             (ngModelChange)="onNavigate()"
+              [readonly]="true">
+      <span class="input-group-btn min-width-20">
+          <button class="btn btn-info" type="button" (click)="toDate.toggle()" [disabled]="readonly"><i
+            class="fa fa-calendar"></i></button>
+        </span>
+    </div>
+  </div>
+</div>

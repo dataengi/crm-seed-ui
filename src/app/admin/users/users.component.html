@@ -1,0 +1,58 @@
+<div class="card">
+  <div class="card-block">
+
+    <table class="table table-hover table-outline m-b-0">
+      <thead class="thead-default">
+      <tr>
+        <th class="text-xs-center"><i class="icon-people"></i></th>
+        <th>Nickname</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let profile of profiles">
+        <td class="text-xs-center">
+          <div class="avatar">
+            <img alt="{{profile.nickname}}" class="img-avatar" src="{{profile.avatarUrl}}">
+          </div>
+        </td>
+        <td>
+          {{profile.nickname}}
+        </td>
+        <td>
+          {{profile.firstName}} {{profile.lastName}}
+        </td>
+        <td>
+          {{profile.user.email}}
+        </td>
+        <td>
+          {{profile.user.role.name}}
+        </td>
+        <td class="text-xs-center">
+          <a class="btn btn-link" [routerLink]="['/contacts', profile.userId]"
+             [queryParams]="{email: profile.user.email}">Contacts</a>
+        </td>
+        <td>
+          <div *ngIf="showActions(profile)">
+            <button class="btn btn-danger" (click)="onDeactivateUser(profile)"
+                    *ngIf="profile.user.state === userStates.Activated">Deactivate
+            </button>
+            <button class="btn btn-success" (click)="onActivateUser(profile)"
+                    *ngIf="profile.user.state === userStates.Deactivated">Activate
+            </button>
+          </div>
+          <div *ngIf="!showActions(profile)">
+            {{profile.user.state}}
+          </div>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>

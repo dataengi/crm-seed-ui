@@ -1,0 +1,24 @@
+<crm-tag-input-item
+  [text]="tag"
+  [index]="index"
+  [selected]="selectedTag === index"
+  (tagRemoved)="_removeTag($event)"
+  [readonly]="readonly"
+  *ngFor="let tag of tagsList; let index = index">
+</crm-tag-input-item>
+
+<input
+  class="form-control"
+  type="text"
+  autocomplete="off"
+  [placeholder]="placeholder"
+  [(ngModel)]="inputValue"
+  (paste)="inputPaste($event)"
+  (keydown)="inputChanged($event)"
+  (blur)="inputBlurred($event)"
+  (focus)="inputFocused()"
+  *ngIf="!readonly">
+
+<div class="form-error" *ngIf="isValid()">
+  {{errorMessage}}
+</div>

@@ -1,0 +1,79 @@
+<div class="row" #row>
+  <div class="col-md-1 col-sm-12" *ngIf="!readonly && !isMoreThenLimit()">
+
+    <div ng2FileDrop
+         [uploader]="fileUploader"
+         (fileOver)="fileOverBase($event)"
+         [ngClass]="{'btn-outline-primary': hasBaseDropZoneOver}"
+         class="file-upload-container btn btn-secondary">
+
+      <label [attr.for]="componentId" class="btn file-upload-label">
+        <i class="icon-cloud-upload"></i><span> Choose file <br> or drag it here</span>
+      </label>
+
+      <input type="file" [attr.id]="componentId" ng2FileSelect [uploader]="fileUploader" [multiple]="!byOne">
+
+    </div>
+  </div>
+
+  <div class="col-sm-12"
+       [ngClass]="{'col-md-11': !readonly && !isMoreThenLimit() && row.offsetWidth > 400,
+                   'col-md-12': readonly || isMoreThenLimit() || row.offsetWidth <= 400}">
+
+    <table class="table table-custom">
+      <thead>
+      <tr>
+        <th class="files-td">File name</th>
+        <th class="files-td status" *ngIf="!readonly">Status</th>
+        <th class="files-td" width="80"><!--Actions--></th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let item of uploadedFiles">
+        <td class="files-td text-truncate file-name" title="{{item.name}}">
+          {{item.name}}
+        </td>
+        <td class="files-td status" *ngIf="!readonly">
+          <span class="is-uploaded">Uploaded</span>
+        </td>
+        <td class="files-td">
+          <div class="pull-right">
+            <button type="button" class="btn btn-link text-muted action-padding" title="Download file"
+                    (click)="onDownload(item)">
+              <span class="fa fa-download fa-lg"></span>
+            </button>
+            <button type="button" class="btn btn-link text-muted action-padding" title="Delete file"
+                    (click)="onRemoveUploaded(item)" *ngIf="!readonly">
+              <span class="fa fa-trash fa-lg"></span>
+            </button>
+          </div>
+        </td>
+      </tr>
+
+      <tr *ngFor="let item of fileUploader.queue">
+        <td class="files-td text-truncate file-name" title="{{item.file.name}}">
+          {{item.file.name}}
+        </td>
+        <td class="files-td status" *ngIf="!readonly">
+          <span *ngIf="item.isUploaded" class="is-uploaded">Uploaded</span>
+          <span *ngIf="item.isUploading" class="uploading">Uploading</span>
+          <span *ngIf="!item.isUploading && !item.isUploaded" class="not-uploaded">Not uploaded</span>
+        </td>
+        <td class="files-td">
+          <div class="pull-right">
+            <button type="button" class="btn btn-link text-muted action-padding" title="Delete file" (click)="item.remove()">
+              <span class="fa fa-trash fa-lg"></span>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <!--<progress class="progress progress-xs progress-info progress-custom" max="100"-->
+              <!--value="{{progressValue()}}"></progress>-->
+    <button type="button" class="btn btn-primary btn-sm" (click)="fileUploader.uploadAll()" *ngIf="!readonly && showUploadButton()">Upload</button>
+    <!--<button class="btn btn-danger btn-sm" (click)="fileUploader.clearQueue()">Remove all</button>-->
+  </div>
+
+</div>

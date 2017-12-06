@@ -1,0 +1,12 @@
+<div id="notifications" [ngClass]="[position]">
+  <div class="notification" *ngFor="let notification of notifications" [ngClass]="[notification.type]">
+
+    <div class="close-button" (click)="close(notification)"></div>
+    <div *ngIf="notification.message" class="notification-text">
+      <span *ngIf="notification.title" class="toast-title">{{notification.title}}</span>
+      <br *ngIf="notification.title && notification.message"/>
+      <span *ngIf="notification.message" class="notification-message">{{notification.message}}</span>
+    </div>
+
+  </div>
+</div>

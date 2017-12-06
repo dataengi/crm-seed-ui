@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-block">
+    <div class="row margin-row-bottom">
+      <div class="col-sm-12">
+        <div class="h5 text-primary m-b-0 m-t-h">GROUPS</div>
+        <div class="text-muted text-uppercase font-weight-bold font-xs">total: {{groups.length}}</div>
+      </div>
+      <div class="col-sm-12" *ngIf="isOwner">
+        <div class="form-group">
+          <div class="input-group">
+            <input id="addGroup" class="form-control" type="text" placeholder="Enter new group name..."
+                     [(ngModel)]="newGroup"
+                   (keyup.enter)="addGroup()">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="button" (click)="addGroup()" [disabled]="newGroup.trim()===''">Add</button>
+            </span>
+          </div>
+            <span *ngIf="isGroupNameToLong()" class="error">Group name is to long</span>
+        </div>
+      </div>
+      <table class="table table-hover table-outline m-b-0 hidden-sm-down">
+        <tbody>
+        <tr *ngFor="let group of groups; let i=index">
+          <td *ngIf="activeGroup!==i"  (click)="onSelectGroup(group)">{{group.name}}</td>
+          <td *ngIf="activeGroup===i" class="low-padding"><input class="form-control" type="text"
+                                             [(ngModel)]="newGroupName"
+                                             (keyup.enter)="editGroup(group.id)">
+            <div *ngIf="isNewGroupNameToLong()" class="error">Group name is to long</div>
+          </td>
+          <td width="90">
+            <button *ngIf="!enableEditGroup && isOwner"
+              class="btn btn-link text-muted action-padding" title="Edit group"
+                    (click)="switchEditField(i)"><span class="fa fa-pencil fa-lg"></span>
+            </button>
+            <button *ngIf="activeGroup===i && isOwner"
+              class="btn btn-link text-muted action-padding" title="Save changes"
+                    (click)="editGroup(group.id)" [disabled]="isNewGroupNameToLong()"><span class="fa fa-check fa-lg"></span>
+            </button>
+            <button *ngIf="!enableEditGroup && isOwner"
+              class="btn btn-link text-muted action-padding" title="Delete group"
+                    (click)="deleteGroup(group.id)"><span
+              class="fa fa-trash fa-lg"></span>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
