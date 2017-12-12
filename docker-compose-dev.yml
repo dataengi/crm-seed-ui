@@ -15,5 +15,6 @@ services:
     links:
       - "postgres:postgres"
     environment:
-      DB_ADDRESS: postgres
+      CRM_DB_HOST: postgres
+      CRM_DB_PORT: 5432
     command: ["-Dpidfile.path=/dev/null"]

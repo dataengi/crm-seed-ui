@@ -2,17 +2,19 @@ version: '3.1'
 services:
   postgres:
     image: postgres:9.5.8-alpine
-    restart: always
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: crm
+    ports:
+      - 6432:5432
 
   crm:
     image: dataengi/crm:latest
     links:
       - "postgres:postgres"
     environment:
-      DB_ADDRESS: postgres
+      CRM_DB_HOST: postgres
+      CRM_DB_PORT: 5432
     command: ["-Dpidfile.path=/dev/null"]
 
   crm-ui:
