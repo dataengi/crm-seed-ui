@@ -1,4 +1,6 @@
-![travis_ci](https://travis-ci.org/dataengi/crm-seed-ui.svg?branch=master)
+[![Build Status](https://travis-ci.org/dataengi/crm-seed-ui.svg?branch=master)](https://travis-ci.org/dataengi/crm-seed-ui)
+[![Join the chat at https://gitter.im/dataengi/crm-seed](https://badges.gitter.im/dataengi/crm-seed.svg)](https://gitter.im/dataengi/crm-seed?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 # CRM Seed UI
 User web interface for starting new customer relationship management system with scala seed project.
 
@@ -91,6 +93,7 @@ After running UI docker container you can access development [documentation](htt
 
 We are welcomes questions via our issues tracker. 
 We also greatly appreciate fixes, feature requests, and updates; before submitting a pull request, please visit contributor [guidelines](CONTRIBUTING.md).
+For issues list look at the [crm-seed](https://github.com/dataengi/crm-seed) project.
 
 ## License
 
