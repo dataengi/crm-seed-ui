@@ -1,3 +1,4 @@
+![travis_ci](https://travis-ci.org/dataengi/crm-seed-ui.svg?branch=master)
 # CRM Seed UI
 User web interface for starting new customer relationship management system with scala seed project.
 
