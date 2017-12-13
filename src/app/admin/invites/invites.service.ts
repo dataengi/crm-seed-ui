@@ -11,7 +11,7 @@ export class InvitesService {
   }
 
   getRoles() {
-    return this.http.get("/auth/api/v1/roles/all").map(response => response)
+    return this.http.get("/auth/api/v1/roles/all")
   }
 
   createInvite(invite: Invite) {
@@ -19,19 +19,19 @@ export class InvitesService {
   }
 
   getInvites() {
-    return this.http.get("/auth/api/v1/invites/all").map(response => response)
+    return this.http.get("/auth/api/v1/invites/all")
   }
 
   getInvitesByCompany() {
-    return this.http.get("/auth/api/v1/invites/company").map(response => response)
+    return this.http.get("/auth/api/v1/invites/company")
   }
 
   getCompanies() {
-    return this.http.get("auth/api/v1/companies/all").map(response => response)
+    return this.http.get("auth/api/v1/companies/all")
   }
 
   createCompany(company: Company) {
-    return this.http.post("auth/api/v1/companies/create", JSON.stringify(company)).map(response => response)
+    return this.http.post("auth/api/v1/companies/create", JSON.stringify(company))
   }
 
   removeInvite(id: number) {

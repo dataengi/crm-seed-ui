@@ -17,12 +17,6 @@ export class MyInterceptor implements HttpInterceptor {
    const authHeaders = req.clone({headers: req.headers.set("X-Auth-Token", token)});
    const contentHeaders = authHeaders.clone({headers: authHeaders.headers.set('Content-Type', 'application/json')});
 
-
-    return next.handle(contentHeaders).do(evt => {
-      if (evt instanceof HttpResponse) {
-        console.log('---> status:', evt.status);
-      }
-    });
-
+   return next.handle(contentHeaders)
   }
 }

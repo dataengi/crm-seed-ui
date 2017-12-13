@@ -10,15 +10,15 @@ export class ContactService {
   }
 
   createContact(contact: Contact) {
-    return this.http.post('/api/v1/contacts/create', JSON.stringify(contact)).map(res => res)
+    return this.http.post('/api/v1/contacts/create', JSON.stringify(contact))
   }
 
   updateContact(contact: Contact) {
-    return this.http.put('/api/v1/contacts/update/' + contact.id, JSON.stringify(contact)).map(res => res)
+    return this.http.put('/api/v1/contacts/update/' + contact.id, JSON.stringify(contact))
   }
 
   // deleteContact(id: number) {
-  //   return this.http.delete('/api/v1/contacts/delete/' + id).map(res => res)
+  //   return this.http.delete('/api/v1/contacts/delete/' + id)
   // }
 
 }

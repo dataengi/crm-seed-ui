@@ -25,7 +25,7 @@ export class StartResetComponent implements OnInit {
     this.authService.startResetPassword(email).subscribe(
       ()=> {
         this.notificationsService.success('Please, check your email for password reset instructions');
-        this.router.navigate(['/auth', 'signIn']).then((res)=>res)
+        this.router.navigate(['/auth', 'signIn']).then(()=>{})
       },
       error => this.notificationsService.error(error)
     );

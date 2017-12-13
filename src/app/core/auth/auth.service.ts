@@ -142,7 +142,7 @@ export class AuthService {
   private cleanToken() {
     localStorage.removeItem(this.authTokenKey);
     this.loggedIn = false;
-    this.router.navigate(['/auth']).then((res)=>res)
+    this.router.navigate(['/auth']).then(()=>{})
   }
 
   private userChanged() {

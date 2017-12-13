@@ -8,7 +8,7 @@ export class UsersService {
   }
 
   getCompanyUsers() {
-    return this.http.get('auth/api/v1/management/users/company/current/members').map(res => res)
+    return this.http.get('auth/api/v1/management/users/company/current/members')
   }
 
   activateUser(userId: number) {
