@@ -7,7 +7,6 @@ import {NotificationsService} from "./notifications/notifications.service";
 import {AuthService} from "./auth/auth.service";
 import {CompaniesManagementGuard, LoggedInOnly, LoggedOutOnly} from "./auth/auth-guard";
 import {AuthHttp} from "./auth/auth-http.service";
-import {HttpModule, RequestOptions} from "@angular/http";
 import {PermissionsService} from "./auth/permissions.service";
 import {ProfileService} from "./profile/profile.service";
 import {CompanyProfilesService} from "./profile/company-profiles.service";
@@ -28,7 +27,6 @@ const RoutesGuards = [
 @NgModule({
   imports: [
     CommonModule,
-    HttpModule,
     HttpClientModule,
     ModalModule
   ],
