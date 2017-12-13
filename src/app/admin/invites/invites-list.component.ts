@@ -41,7 +41,7 @@ export class InvitesListComponent implements OnInit {
             this.invites.splice(this.invites.indexOf(invite), 1);
             this.notificationsService.success("Invite deleted");
           },
-          error => this.notificationsService.error(error.json())
+          error => this.notificationsService.error(error)
         )
       },
       cancel => console.debug('Cancel')

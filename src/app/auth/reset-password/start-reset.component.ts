@@ -22,13 +22,12 @@ export class StartResetComponent implements OnInit {
 
   onSubmit() {
     const email = this.startResetForm.value['email'];
-    console.log(email);
     this.authService.startResetPassword(email).subscribe(
-      ok => {
+      ()=> {
         this.notificationsService.success('Please, check your email for password reset instructions');
-        this.router.navigate(['/auth', 'signIn'])
+        this.router.navigate(['/auth', 'signIn']).then((res)=>res)
       },
-      error => this.notificationsService.error(error.json())
+      error => this.notificationsService.error(error)
     );
   }
 

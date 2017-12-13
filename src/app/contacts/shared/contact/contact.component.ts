@@ -117,7 +117,7 @@ export class ContactComponent implements OnInit, OnDestroy {
         this.activeModal.close();
       },
       error => {
-        this.notificationsService.error(error.json());
+        this.notificationsService.error(error);
       }
     )
   }

@@ -3,7 +3,7 @@ import {CompanyProfilesService} from "../../core/profile/company-profiles.servic
 import {Profile} from "../../core/models/profile/profile.model";
 import {ConfirmDialogService} from "../../core/confirm-dialog/confirm-dialog.service";
 import {UsersService} from "./users.service";
-import {UserStates, UserState} from "../../core/models/auth/user-state.type";
+import {UserStates} from "../../core/models/auth/user-state.type";
 import {PermissionsService} from "../../core/auth/permissions.service";
 import {Actions} from "../../core/models/auth/action.type";
 import {AuthService} from "../../core/auth/auth.service";
@@ -37,7 +37,7 @@ export class UsersComponent implements OnInit {
 
   onActivateUser(profile: Profile) {
     this.confirmDialogService.ask('You really want activate ' + profile.nickname, 'Activate', 'User activation').then(
-      confirm => {
+      ()=> {
         this.usersService.activateUser(profile.userId).subscribe(
           ok => profile.user.state = UserStates.Activated,
           error => console.error(error)
@@ -49,7 +49,7 @@ export class UsersComponent implements OnInit {
 
   onDeactivateUser(profile: Profile) {
     this.confirmDialogService.ask('You really want deactivate ' + profile.nickname, 'Deactivate', 'User deactivation').then(
-      confirm => {
+      ()=> {
         this.usersService.deactivateUser(profile.userId).subscribe(
           ok => profile.user.state = UserStates.Deactivated,
           error => console.error(error)

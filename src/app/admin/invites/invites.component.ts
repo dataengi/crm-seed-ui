@@ -62,7 +62,6 @@ export class InvitesComponent implements OnInit, OnDestroy {
     formValue.companyId = parseInt(this.inviteForm.value.companyId);
     this.initForm();
     this.createInviteSubscription = this.invitesService.createInvite(formValue)
-      .map(resp => resp.json())
       .subscribe(
         (ok: Invite) => {
           ok.company = this.getCompaniesById()[ok.companyId];

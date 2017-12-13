@@ -27,7 +27,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.signIn(this.signInForm.value.email, this.signInForm.value.password, this.signInForm.value.rememberMe)
       .subscribe(
         ok => this.router.navigate(["/"]),
-        error => this.notificationsService.error(error.json())
+        error => this.notificationsService.error(error)
       );
   }
 

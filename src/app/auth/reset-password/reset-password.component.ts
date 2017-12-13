@@ -36,7 +36,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         this.notificationsService.success('Password changed');
         this.router.navigate(['/'])
       },
-      error => this.notificationsService.error(error.json())
+      error => this.notificationsService.error(error)
     );
   }
 

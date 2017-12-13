@@ -8,14 +8,14 @@ export class UsersService {
   }
 
   getCompanyUsers() {
-    return this.http.get('auth/api/v1/management/users/company/current/members').map(res => res.json())
+    return this.http.get('auth/api/v1/management/users/company/current/members').map(res => res)
   }
 
   activateUser(userId: number) {
-    return this.http.post('auth/api/v1/management/users/activate/' + userId, {}).map(rs => rs.json())
+    return this.http.post('auth/api/v1/management/users/activate/' + userId, {}).map(rs => rs)
   }
 
   deactivateUser(userId: number) {
-    return this.http.post('auth/api/v1/management/users/deactivate/' + userId, {}).map(rs => rs.json())
+    return this.http.post('auth/api/v1/management/users/deactivate/' + userId, {}).map(rs => rs)
   }
 }

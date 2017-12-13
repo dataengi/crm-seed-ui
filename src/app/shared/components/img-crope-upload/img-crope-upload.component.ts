@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild, Input, Output, EventEmitter} from "@angular/core";
 import {CropperSettings, ImageCropperComponent} from "ng2-img-cropper";
-import {RequestOptions, Headers, Http} from "@angular/http";
 import {AuthService} from "../../../core/auth/auth.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Component({
   selector: 'crm-img-crope-upload',
@@ -21,7 +21,7 @@ export class ImgCropeUploadComponent implements OnInit {
 
   cropperSettings: CropperSettings;
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private authService: AuthService,
               public activeModal: NgbActiveModal) {
 
@@ -51,14 +51,13 @@ export class ImgCropeUploadComponent implements OnInit {
   onSave() {
     let formData = new FormData();
     formData.append('file', this.base64ToFile(this.data.image));
-    let headers = new Headers();
+    let headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
     headers.append(this.authService.getHeaderName(), this.authService.getToken());
-    let options = new RequestOptions({headers: headers});
 
-    this.http.post('/api/v1/files/avatar', formData, options).subscribe(
-      ok => {
-        this.imageChange.emit('/api/v1/avatar/' + ok.json().uuid);
+    this.http.post('/api/v1/files/avatar', formData, {headers:headers}).subscribe(
+      (res:any) => {
+        this.imageChange.emit('/api/v1/avatar/' + res.uuid);
         this.activeModal.close();
       },
       error => console.log(error)

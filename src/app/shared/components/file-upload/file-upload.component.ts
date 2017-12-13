@@ -69,7 +69,7 @@ export class FileUploadComponent implements OnInit, OnChanges, OnDestroy {
   private getFileData() {
     if (this.uploadedFilesIds && this.uploadedFilesIds.filter(Boolean).length > 0) {
       this.fileDataSubscription = this.http.post('/api/v1/files', JSON.stringify(this.uploadedFilesIds.filter(Boolean)))
-        .map(res => res.json())
+        .map(res => res)
         .subscribe(
           filesData => this.uploadedFiles = filesData,
           error => console.log(error)

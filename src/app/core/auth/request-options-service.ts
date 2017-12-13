@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {BaseRequestOptions, RequestOptionsArgs, RequestOptions} from "@angular/http";
-
+//TODO Remove this file after migration
 @Injectable()
 export class RequestOptionsService extends BaseRequestOptions {
 
