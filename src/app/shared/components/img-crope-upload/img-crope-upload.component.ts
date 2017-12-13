@@ -51,11 +51,7 @@ export class ImgCropeUploadComponent implements OnInit {
   onSave() {
     let formData = new FormData();
     formData.append('file', this.base64ToFile(this.data.image));
-    let headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append(this.authService.getHeaderName(), this.authService.getToken());
-
-    this.http.post('/api/v1/files/avatar', formData, {headers:headers}).subscribe(
+    this.http.post('/api/v1/files/avatar', formData).subscribe(
       (res:any) => {
         this.imageChange.emit('/api/v1/avatar/' + res.uuid);
         this.activeModal.close();
