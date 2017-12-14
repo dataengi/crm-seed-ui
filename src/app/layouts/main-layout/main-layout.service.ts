@@ -1,4 +1,3 @@
-import {AuthHttp} from "../../core/auth/auth-http.service";
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 
@@ -8,6 +7,6 @@ export class MainLayoutService {
   }
 
   getVersion() {
-    return this.http.get('/api/version').map((res:any) => res);
+    return this.http.get('/api/version')
   }
 }
