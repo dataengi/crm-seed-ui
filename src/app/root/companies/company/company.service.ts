@@ -8,11 +8,10 @@ export class CompanyService {
   constructor(private http: AuthHttp) { }
 
   getCompanyUsers(companyId: number) {
-    return this.http.get('auth/api/v1/management/users/company/members/' + companyId)
+    return this.http.get<any>('auth/api/v1/management/users/company/members/' + companyId)
       .flatMap(res => {
-        let users = res.json();
+        let users = res;
         return this.http.post('/api/v1/profile/get/users', JSON.stringify({userIds: users.map(user => user.id)}))
-          .map(rs => rs.json())
           .map((profiles: Profile[]) => {
             profiles.forEach(profile => profile.user = users.find(user => user.id === profile.userId));
             return profiles
@@ -21,11 +20,11 @@ export class CompanyService {
   }
 
   activateUser(userId: number) {
-    return this.http.post('auth/api/v1/management/users/activate/' + userId, {}).map(rs => rs.json())
+    return this.http.post('auth/api/v1/management/users/activate/' + userId, {})
   }
 
   deactivateUser(userId: number) {
-    return this.http.post('auth/api/v1/management/users/deactivate/' + userId, {}).map(rs => rs.json())
+    return this.http.post('auth/api/v1/management/users/deactivate/' + userId, {})
   }
 
 

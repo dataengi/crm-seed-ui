@@ -35,9 +35,9 @@ export class InvitesListComponent implements OnInit {
 
   removeInvite(invite: Invite) {
     this.confirmDialogService.ask('You really want delete invite?', 'Delete', 'Delete invite confirmation').then(
-      confirm => {
+      () => {
         this.invitesService.removeInvite(invite.id).subscribe(
-          ok => {
+          () => {
             this.invites.splice(this.invites.indexOf(invite), 1);
             this.notificationsService.success("Invite deleted");
           },

@@ -43,7 +43,7 @@ export class CompanyComponent implements OnInit {
 
   onActivateUser(profile: Profile) {
     this.confirmDialogService.ask('You really want activate ' + profile.nickname, 'Activate', 'User activation').then(
-      confirm => {
+      () => {
         this.companyService.activateUser(profile.userId).subscribe(
           ok => profile.user.state = UserStates.Activated,
           error => console.error(error)
@@ -55,7 +55,7 @@ export class CompanyComponent implements OnInit {
 
   onDeactivateUser(profile: Profile) {
     this.confirmDialogService.ask('You really want deactivate ' + profile.nickname, 'Deactivate', 'User deactivation').then(
-      confirm => {
+      () => {
         this.companyService.deactivateUser(profile.userId).subscribe(
           ok => profile.user.state = UserStates.Deactivated,
           error => console.error(error)

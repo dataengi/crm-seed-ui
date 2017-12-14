@@ -11,32 +11,32 @@ export class AuthHttp {
   constructor(private authService: AuthService, private http: HttpClient) {
   }
 
-  public get(url: string, options?:any): Observable<any> {
-    return this.http.get(url, options).catch(error => this.processError(error));
+  public get<T>(url: string, options?:any): Observable<T> {
+    return this.http.get<T>(url, options).catch(error => this.processError(error));
   }
 
-  public post(url: string, body: any, options?: any): Observable<any> {
-    return this.http.post(url, body, options).catch(error => this.processError(error));
+  public post<T>(url: string, body: any, options?: any): Observable<T> {
+    return this.http.post<T>(url, body, options).catch(error => this.processError(error));
   }
 
-  public put(url: string, body: any, options?: any): Observable<any> {
-    return this.http.put(url, body, options).catch(error => this.processError(error));
+  public put<T>(url: string, body: any, options?: any): Observable<T>{
+    return this.http.put<T>(url, body, options).catch(error => this.processError(error));
   }
 
-  public delete(url: string, options?: any): Observable<any> {
-    return this.http.delete(url, options).catch(error => this.processError(error));
+  public delete<T>(url: string, options?: any): Observable<T>{
+    return this.http.delete<T>(url, options).catch(error => this.processError(error));
   }
 
-  public head(url: string, options?: any): Observable<any> {
-    return this.head(url, options).catch(error => this.processError(error));
+  public head<T>(url: string, options?: any): Observable<T> {
+    return this.head<T>(url, options).catch(error => this.processError(error));
   }
 
-  public options(url: string, options?: any): Observable<any> {
-    return this.options(url, options).catch(error => this.processError(error));
+  public options<T>(url: string, options?: any): Observable<T>{
+    return this.options<T>(url, options).catch(error => this.processError(error));
   }
 
-  public download(url: string):Observable<any>{
-    return this.get(url, {responseType: "blob"})
+  public download<T>(url: string):Observable<T>{
+    return this.get<T>(url, {responseType: "blob"})
   }
 
   private processError(response: HttpErrorResponse) {

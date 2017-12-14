@@ -13,10 +13,8 @@ export class AuthService {
 
   private readonly authTokenKey = 'xZaSwqS';
   private readonly tokenInHeader = "X-Auth-Token";
-
   private loggedIn: boolean = true;
   private user: User = new EmptyUser;
-
   private userSubject = new Subject<User>();
   public userState = this.userSubject.asObservable();
 
@@ -29,6 +27,7 @@ export class AuthService {
     if (this.loggedIn) {
       this.setUser()
     }
+
   }
 
   signIn(email: string, password: string, rememberMe: boolean = false) {
@@ -142,7 +141,8 @@ export class AuthService {
   private cleanToken() {
     localStorage.removeItem(this.authTokenKey);
     this.loggedIn = false;
-    this.router.navigate(['/auth']).then(()=>{})
+    this.router.navigate(['/auth'])
+      .catch(()=>console.log('Error during redirect to auth'))
   }
 
   private userChanged() {

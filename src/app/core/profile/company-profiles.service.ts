@@ -31,8 +31,8 @@ export class CompanyProfilesService {
 
   private setProfiles() {
     this.profiles = {};
-    return this.http.get('auth/api/v1/management/users/company/current/members')
-      .flatMap(res => {
+    return this.http.get<any>('auth/api/v1/management/users/company/current/members')
+      .flatMap((res) => {
         let users = res;
         return this.http.post('/api/v1/profile/get/users', JSON.stringify({userIds: users.map(user => user.id)}))
           .map(

@@ -70,7 +70,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
           this.spinner.hide();
         },
         error => {
-          this.notifications.error(error.json());
+          this.notifications.error(error);
           this.spinner.hide();
         }
       )
@@ -84,17 +84,18 @@ export class InvitesComponent implements OnInit, OnDestroy {
     this.setIsAllowCreateCompany();
     this.initForm();
 
-    this.userStateSubscription = this.authService.userState.subscribe(user => {
-      if (this.isAllowCreateCompany !== this.ps.isAllow(Actions.CreateCompany)) {
-        this.setIsAllowCreateCompany();
-        this.initForm();
-      }
+    this.userStateSubscription = this.authService.userState.subscribe(
+      () => {
+        if (this.isAllowCreateCompany !== this.ps.isAllow(Actions.CreateCompany)) {
+          this.setIsAllowCreateCompany();
+          this.initForm();
+        }
     });
 
     this.subscribeInvites();
 
     this.rolesSubscription = this.invitesService.getRoles().subscribe(
-      roles => this.roles = roles,
+      (roles:Role[]) => this.roles = roles,
       error => console.log(error)
     );
   }
@@ -105,7 +106,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
     this.invitesSubscription = (this.isAllowCreateCompany ? this.invitesService.getInvites() :
       this.invitesService.getInvitesByCompany())
       .subscribe(
-        invites => {
+        (invites: Invite[]) => {
           if (this.isAllowCreateCompany) {
             this.subscribeCompanies(() => this.decorateInvitesWithCompany(invites));
           } else {
@@ -130,7 +131,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
 
   subscribeCompanies(onDone: () => any) {
     this.companiesSubscription = this.invitesService.getCompanies().subscribe(
-      companies => {
+      (companies:Company[]) => {
         this.companies = companies;
         onDone();
       },

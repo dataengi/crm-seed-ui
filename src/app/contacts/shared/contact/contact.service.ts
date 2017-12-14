@@ -16,9 +16,4 @@ export class ContactService {
   updateContact(contact: Contact) {
     return this.http.put('/api/v1/contacts/update/' + contact.id, JSON.stringify(contact))
   }
-
-  // deleteContact(id: number) {
-  //   return this.http.delete('/api/v1/contacts/delete/' + id)
-  // }
-
 }

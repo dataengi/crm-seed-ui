@@ -84,7 +84,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     let newContact: Contact = this.contactForm.value;
     if (newContact.company === null) newContact.company = '';
     this.contactService.createContact(newContact).subscribe(
-      contact => {
+      (contact: Contact) => {
         this.contact = contact;
         this.contact.groups = [];
         this.newContactEvent.emit(this.contact);
@@ -94,7 +94,7 @@ export class ContactComponent implements OnInit, OnDestroy {
         this.activeModal.close();
       },
       error => {
-        this.notificationsService.error(error.json())
+        this.notificationsService.error(error)
       }
     );
   }
@@ -107,7 +107,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     contact.contactsBookId = this.contact.contactsBookId;
 
     this.contactService.updateContact(contact).subscribe(
-      contact => {
+      (contact:Contact) => {
         contact.groups = this.contactForm.controls['groupIds'].value.map(id => this.getGroupById(id));
         this.contact.groups.length = 0;
         this.contact.groups.push(...contact.groups);

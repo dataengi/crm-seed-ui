@@ -222,7 +222,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
         this.notificationsService.success('Contacts added to group');
       },
       error => {
-        this.notificationsService.error(error.json())
+        this.notificationsService.error(error)
       }
     )
   }
@@ -239,15 +239,16 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
   onRemoveContactFromGroup(contact: Contact, event: Event) {
     event.stopPropagation();
-    this.contactsService.deleteContactFromGroup(new RemoveContactsFromGroupData(this.selectedGroup.id, [contact.id])).subscribe(
-      ()=> {
-        this.contacts[this.contacts.indexOf(contact)].groups.splice(contact.groups.indexOf(this.selectedGroup), 1);
-        this.notificationsService.success('Contact removed from group');
-      },
-      error => {
-        this.notificationsService.error(error.json())
-      }
-    )
+    this.contactsService.deleteContactFromGroup(new RemoveContactsFromGroupData(this.selectedGroup.id, [contact.id]))
+      .subscribe(
+        ()=> {
+          this.contacts[this.contacts.indexOf(contact)].groups.splice(contact.groups.indexOf(this.selectedGroup), 1);
+          this.notificationsService.success('Contact removed from group');
+          },
+          error => {
+          this.notificationsService.error(error)
+        }
+      )
   }
 
   caretClass() {

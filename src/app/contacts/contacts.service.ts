@@ -20,28 +20,12 @@ export class ContactsService {
     return this.http.get('/api/v1/contacts/contactsbook/owner/' + userId);
   }
 
-  getContacts() {
-    return this.http.get('/api/v1/contacts/all').map(res => res.json())
-  }
-
-  createContact(contact: Contact) {
-    return this.http.post('/api/v1/contacts/create', JSON.stringify(contact))
-  }
-
-  updateContact(contact: Contact) {
-    return this.http.put('/api/v1/contacts/update/' + contact.id, JSON.stringify(contact))
-  }
-
   deleteContact(id: number) {
     return this.http.delete('/api/v1/contacts/delete/' + id)
   }
 
   deleteContacts(data: RemoveContactsData) {
     return this.http.post('/api/v1/contacts/delete', JSON.stringify(data))
-  }
-
-  getGroup(id: number) {
-    return this.http.get('/api/v1/contacts/group/get/' + id)
   }
 
   deleteGroup(id: number) {

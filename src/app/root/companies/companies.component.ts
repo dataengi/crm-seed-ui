@@ -16,7 +16,7 @@ export class CompaniesComponent implements OnInit {
   ngOnInit() {
     this.companiesService.getCompaniesList()
       .subscribe(
-        companies => this.companies = companies,
+        (companies: Company[]) => this.companies = companies,
         error => console.log(error)
     )
   }

@@ -32,7 +32,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.signUpSubscription = this.authService.signUp(this.signUpForm.value.pass, this.hash).subscribe(
-      ok => this.router.navigate(['/profile']),
+      () => this.router.navigate(['/profile']),
       error => this.ns.error(error)
     );
   }

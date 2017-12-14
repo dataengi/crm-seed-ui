@@ -32,7 +32,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   onSubmit() {
     const password = this.resetForm.value['pass'];
     this.authService.resetPassword(this.hash, password).subscribe(
-      ok => {
+      () => {
         this.notificationsService.success('Password changed');
         this.router.navigate(['/'])
       },
