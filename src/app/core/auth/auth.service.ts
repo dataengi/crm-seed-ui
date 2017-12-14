@@ -73,7 +73,6 @@ export class AuthService {
   startResetPassword(email: string) {
     localStorage.removeItem(this.authTokenKey);
     return this.http.post('auth/api/v1/authentication/password/forgot', JSON.stringify({email}))
-      .map((res:HttpResponse<any>)=>res)
       .catch((error:HttpErrorResponse) => this.processError(error))
   }
 
