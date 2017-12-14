@@ -73,7 +73,7 @@ export class AuthService {
   startResetPassword(email: string) {
     localStorage.removeItem(this.authTokenKey);
     return this.http.post('auth/api/v1/authentication/password/forgot', JSON.stringify({email}))
-      .catch((error:HttpErrorResponse) => this.processError(error))
+      .catch((error:HttpErrorResponse) => this.processError(error.error))
   }
 
   resetPassword(hash: string, password: string) {
@@ -87,7 +87,7 @@ export class AuthService {
         }
         return res
       })
-      .catch((error:HttpErrorResponse) => this.processError(error))
+      .catch((error:HttpErrorResponse) => this.processError(error.error))
   }
 
   isLoggedIn() {
@@ -114,7 +114,7 @@ export class AuthService {
           if (error.status === 401) {
             this.cleanToken()
           }
-          console.error(error);
+          console.error(error.error);
         }
       )
   }
@@ -127,7 +127,7 @@ export class AuthService {
     console.log('Process unauthorized', response);
     if (response.status === 401) {
       this.cleanToken();
-      this.notificationsService.error(response)
+      this.notificationsService.error(response.error)
     }
   }
 

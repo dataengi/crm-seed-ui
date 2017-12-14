@@ -94,7 +94,7 @@ export class ContactComponent implements OnInit, OnDestroy {
         this.activeModal.close();
       },
       error => {
-        this.notificationsService.error(error)
+        this.notificationsService.error(error.error)
       }
     );
   }
@@ -117,7 +117,7 @@ export class ContactComponent implements OnInit, OnDestroy {
         this.activeModal.close();
       },
       error => {
-        this.notificationsService.error(error);
+        this.notificationsService.error(error.error);
       }
     )
   }

@@ -125,7 +125,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
             this.contacts.splice(this.contacts.indexOf(contact), 1);
             this.notificationsService.success('Contact deleted');
           },
-          error => this.notificationsService.error(error)
+          error => this.notificationsService.error(error.error)
         )
       },
       cancel => console.debug('Cancel')
@@ -190,7 +190,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
             this.notificationsService.success('Contacts deleted');
           },
           error => {
-            this.notificationsService.error(error)
+            this.notificationsService.error(error.error)
           }
         );
       },
@@ -222,7 +222,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
         this.notificationsService.success('Contacts added to group');
       },
       error => {
-        this.notificationsService.error(error)
+        this.notificationsService.error(error.error)
       }
     )
   }
@@ -246,7 +246,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
           this.notificationsService.success('Contact removed from group');
           },
           error => {
-          this.notificationsService.error(error)
+          this.notificationsService.error(error.error)
         }
       )
   }

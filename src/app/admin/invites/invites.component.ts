@@ -70,7 +70,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
           this.spinner.hide();
         },
         error => {
-          this.notifications.error(error);
+          this.notifications.error(error.error);
           this.spinner.hide();
         }
       )

@@ -72,7 +72,7 @@ export class GroupsComponent implements OnInit {
             this.notificationsService.success('Group updated')
           },
           error => {
-            this.notificationsService.error(error)
+            this.notificationsService.error(error.error)
           }
         );
       } else {
@@ -89,7 +89,7 @@ export class GroupsComponent implements OnInit {
             this.deleteGroupEvent.emit(id);
             this.notificationsService.success('Group deleted')
           },
-          error => this.notificationsService.error(error)
+          error => this.notificationsService.error(error.error)
         );
       },
       cancel => console.debug('Canceled')
