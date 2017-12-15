@@ -31,7 +31,10 @@ export class CompanyComponent implements OnInit {
   ngOnInit() {
     this.companyId = +this.route.snapshot.params['id'];
     this.companyService.getCompanyUsers(this.companyId).subscribe(
-      profiles => this.profiles = profiles,
+      profiles => {
+        this.profiles = profiles;
+        console.log(this.profiles);
+      },
       error => console.log(error)
     )
   }
