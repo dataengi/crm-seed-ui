@@ -103,8 +103,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
   subscribeInvites() {
     console.log("isAllowCreateCompany " + this.isAllowCreateCompany);
 
-    this.invitesSubscription = (this.isAllowCreateCompany ? this.invitesService.getInvites() :
-      this.invitesService.getInvitesByCompany())
+    this.invitesSubscription = (this.isAllowCreateCompany ? this.invitesService.getInvites() : this.invitesService.getInvitesByCompany())
       .subscribe(
         (invites: Invite[]) => {
           if (this.isAllowCreateCompany) {
