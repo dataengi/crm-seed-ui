@@ -5,6 +5,7 @@ import {Subscription, Subject} from "rxjs";
 import {ProfileService} from "./profile.service";
 import {Profile} from "../models/profile/profile.model";
 import 'rxjs/Rx';
+import {HttpClient, HttpResponse} from "@angular/common/http";
 
 @Injectable()
 export class CompanyProfilesService {
@@ -13,7 +14,7 @@ export class CompanyProfilesService {
   private profiles: {[key: number]: Profile} = {};
   private profilesSubject = new Subject<void>();
 
-  constructor(private http: AuthHttp,
+  constructor(private http: HttpClient,
               private authService: AuthService,
               private profileService: ProfileService) {
 
@@ -32,7 +33,7 @@ export class CompanyProfilesService {
   private setProfiles() {
     this.profiles = {};
     return this.http.get<any>('auth/api/v1/management/users/company/current/members')
-      .flatMap((res) => {
+      .mergeMap((res) => {
         let users = res;
         return this.http.post('/api/v1/profile/get/users', JSON.stringify({userIds: users.map(user => user.id)}))
           .map(
