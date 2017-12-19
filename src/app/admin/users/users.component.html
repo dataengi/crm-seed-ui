@@ -34,7 +34,7 @@
         </td>
         <td class="text-xs-center">
           <a class="btn btn-link" [routerLink]="['/contacts', profile.userId]"
-             [queryParams]="{email: profile.user.email}">Contacts</a>
+             [queryParams]="{email: profile.email}">Contacts</a>
         </td>
         <td>
           <div *ngIf="showActions(profile)">

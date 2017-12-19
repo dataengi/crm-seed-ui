@@ -52,7 +52,10 @@ export class InvitesComponent implements OnInit, OnDestroy {
 
   createCompany() {
     const modalRef = this.modalService.open(CreateCompanyComponent);
-    modalRef.componentInstance.newCompany.subscribe((company: Company) => this.companies.push(company));
+    modalRef.result.then((company: Company)=>{
+      this.companies.push(company);
+      modalRef.close();
+    });
   }
 
   onSubmit() {
