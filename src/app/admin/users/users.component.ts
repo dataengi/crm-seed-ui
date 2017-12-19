@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
               private authService: AuthService) { }
 
   ngOnInit() {
-    this.profiles = this.companyProfilesService.getProfilesList();
+  this.companyProfilesService.setProfiles().subscribe(res=>{this.profiles = res;});
   }
 
   showActions(profile: Profile) {
