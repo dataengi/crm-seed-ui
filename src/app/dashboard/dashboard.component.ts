@@ -1,11 +1,7 @@
 import {Component, OnInit, OnDestroy} from "@angular/core";
-import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
-import {NotificationsService} from "../core/notifications/notifications.service";
-import {AuthHttp} from "../core/auth/auth-http.service";
 import {SpinnerService} from "../core/spinner/spinner.service";
 import {CRMValidators} from "../shared/validators/CRMValidators";
-import {CompanyProfilesService} from "../core/profile/company-profiles.service";
 
 
 @Component({
@@ -17,9 +13,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private router: Router,
-              private notificationsService: NotificationsService,
-              private authHttp: AuthHttp, private ss: SpinnerService, private companyProfilesService: CompanyProfilesService) {
+  constructor(private ss: SpinnerService) {
   }
 
   ngOnInit(): void {
@@ -46,6 +40,4 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
-
-  testItems = this.companyProfilesService.getAllForSelect();
 }

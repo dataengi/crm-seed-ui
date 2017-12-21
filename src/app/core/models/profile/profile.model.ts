@@ -9,4 +9,5 @@ export interface Profile {
   user?: User;
   id?: number;
   userId?: number;
+  email?:string;
 }

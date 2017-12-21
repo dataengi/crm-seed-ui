@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
-import {Http, Response} from "@angular/http";
 import {Router} from "@angular/router";
+import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {NotificationsService} from "../notifications/notifications.service";
 import {Observable, Subject} from "rxjs";
 import {PermissionsService} from "./permissions.service";
@@ -13,16 +13,12 @@ export class AuthService {
 
   private readonly authTokenKey = 'xZaSwqS';
   private readonly tokenInHeader = "X-Auth-Token";
-  private readonly errorMessageKey = "X-Error-Message";
-
   private loggedIn: boolean = true;
   private user: User = new EmptyUser;
-
   private userSubject = new Subject<User>();
-
   public userState = this.userSubject.asObservable();
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private router: Router,
               private notificationsService: NotificationsService,
               private permissionsService: PermissionsService) {
@@ -36,66 +32,62 @@ export class AuthService {
 
   signIn(email: string, password: string, rememberMe: boolean = false) {
     return this.http.post('/auth/api/v1/authentication/signIn', JSON.stringify({email, password, rememberMe}))
-      .map(res => res.json())
-      .map(res => {
-        if (!!res.token) {
-          localStorage.setItem(this.authTokenKey, res.token);
+      .map((res:HttpResponse<any>) => {
+        if (!!res['token']) {
+          localStorage.setItem(this.authTokenKey, res['token']);
           this.loggedIn = true;
           this.setUser();
         }
         return res
       })
-      .catch(rs => this.processError(rs))
+      .catch((error: HttpErrorResponse) => this.processError(error))
   }
 
   signUp(password: string, hash: string) {
     return this.http.post('/auth/api/v1/authentication/signUp/' + hash, JSON.stringify({password}))
-      .map(res => res.json())
-      .map(res => {
-        if (!!res.token) {
-          localStorage.setItem(this.authTokenKey, res.token);
+      .map((res:HttpResponse<any>) => {
+        if (!!res['token']) {
+          localStorage.setItem(this.authTokenKey, res['token']);
           this.loggedIn = true;
           this.setUser();
         }
         return res
       })
-      .catch(rs => this.processError(rs))
+      .catch((error:HttpErrorResponse) => this.processError(error))
   }
 
   signOut() {
     return this.http.post('/auth/api/v1/authentication/signOut', {})
-      .catch(error => {
+      .map(() => {
+        localStorage.removeItem(this.authTokenKey);
+        this.loggedIn = false;
+      })
+      .catch((error:HttpErrorResponse) => {
         if (error.status === 401) {
           this.cleanToken()
         }
         return Observable.throw(error);
       })
-      .map(rs => {
-        localStorage.removeItem(this.authTokenKey);
-        this.loggedIn = false;
-      });
   }
 
   startResetPassword(email: string) {
     localStorage.removeItem(this.authTokenKey);
     return this.http.post('auth/api/v1/authentication/password/forgot', JSON.stringify({email}))
-      .map(res => res.json())
-      .catch(rs => this.processError(rs))
+      .catch((error:HttpErrorResponse) => this.processError(error.error))
   }
 
   resetPassword(hash: string, password: string) {
     localStorage.removeItem(this.authTokenKey);
     return this.http.post('/auth/api/v1/authentication/password/recover/' + hash, JSON.stringify({newPassword: password}))
-      .map(res => res.json())
-      .map(res => {
-        if (!!res.token) {
-          localStorage.setItem(this.authTokenKey, res.token);
+      .map((res:HttpResponse<any>) => {
+        if (!!res['token']) {
+          localStorage.setItem(this.authTokenKey, res['token']);
           this.loggedIn = true;
           this.setUser();
         }
         return res
       })
-      .catch(rs => this.processError(rs))
+      .catch((error:HttpErrorResponse) => this.processError(error.error))
   }
 
   isLoggedIn() {
@@ -112,18 +104,17 @@ export class AuthService {
 
   setUser() {
     this.http.get('auth/api/v1/authentication/identity')
-      .map(res => res.json())
       .subscribe(
         (user: User) => {
           this.user = user;
           this.permissionsService.setPermissions(user.role.permissions);
           this.userChanged();
         },
-        error => {
+        (error:HttpErrorResponse) => {
           if (error.status === 401) {
             this.cleanToken()
           }
-          console.error(error);
+          console.error(error.error);
         }
       )
   }
@@ -132,15 +123,15 @@ export class AuthService {
     return this.user;
   }
 
-  processUnauthorized(response: Response): void {
+  processUnauthorized(response: HttpErrorResponse): void {
     console.log('Process unauthorized', response);
     if (response.status === 401) {
       this.cleanToken();
-      this.notificationsService.error(response.json())
+      this.notificationsService.error(response.error)
     }
   }
 
-  private processError(response: Response) {
+  private processError(response: HttpErrorResponse) {
     this.processUnauthorized(response);
     console.log('process error', response);
     return Observable.throw(response);
@@ -149,7 +140,8 @@ export class AuthService {
   private cleanToken() {
     localStorage.removeItem(this.authTokenKey);
     this.loggedIn = false;
-    this.router.navigate(['/auth']);
+    this.router.navigate(['/auth'])
+      .catch(()=>console.log('Error during redirect to auth'))
   }
 
   private userChanged() {

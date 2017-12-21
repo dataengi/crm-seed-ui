@@ -18,7 +18,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.mainLayoutService.getVersion().subscribe(
-      data => this.version = data.version,
+      (data:any) => this.version = data.version,
       error => console.error("Can't load version", error)
     );
 

@@ -34,14 +34,6 @@ export class SidebarComponent implements OnDestroy {
 
   @ViewChildren(DropdownDirective) dropdownDirectives;
 
-  closeOtherDropdown(sd: DropdownDirective) {
-    this.dropdownDirectives.forEach((entry: DropdownDirective) => {
-      if (entry !== sd) {
-        entry.close()
-      }
-    });
-  }
-
   private setPermissions() {
 
     this.showAdmin = this.ps.isAllow(Actions.UsersManagement);

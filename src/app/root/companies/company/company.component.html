@@ -28,18 +28,14 @@
           {{profile.firstName}} {{profile.lastName}}
         </td>
         <td>
-          {{profile.user.email}}
+          {{profile.email}}
         </td>
         <td>
           {{profile.user.role.name}}
         </td>
         <td class="text-xs-center">
           <a class="btn btn-link" [routerLink]="['/contacts', profile.userId]"
-             [queryParams]="{email: profile.user.email}">Contacts</a>
-          <a class="btn btn-link" [routerLink]="['/orders', 'list', profile.userId]"
-             [queryParams]="{email: profile.user.email}">Orders</a>
-          <a class="btn btn-link" [routerLink]="['/reports', 'user', profile.userId]"
-             [queryParams]="{email: profile.user.email}">Reports</a>
+             [queryParams]="{email: profile.email}">Contacts</a>
         </td>
         <td>
           <div *ngIf="showActions(profile)">

@@ -20,14 +20,13 @@ export class SignInComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private notificationsService: NotificationsService,
-              private router: Router) {
-  }
+              private router: Router) {}
 
   onSubmit() {
     this.subscription = this.authService.signIn(this.signInForm.value.email, this.signInForm.value.password, this.signInForm.value.rememberMe)
       .subscribe(
-        ok => this.router.navigate(["/"]),
-        error => this.notificationsService.error(error.json())
+        () => this.router.navigate(["/"]),
+        error => this.notificationsService.error(error.error)
       );
   }
 

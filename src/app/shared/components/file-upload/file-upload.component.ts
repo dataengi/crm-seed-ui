@@ -47,7 +47,7 @@ export class FileUploadComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onDownload(fileData: FileData) {
-    this.http.download('/api/v1/files/' + fileData.uuid).subscribe(
+    this.http.download<any>('/api/v1/files/' + fileData.uuid).subscribe(
       response => {
         let contentType: string = response.headers.get('content-type');
         let blob = new Blob([response.blob()], {type: contentType});
@@ -69,9 +69,9 @@ export class FileUploadComponent implements OnInit, OnChanges, OnDestroy {
   private getFileData() {
     if (this.uploadedFilesIds && this.uploadedFilesIds.filter(Boolean).length > 0) {
       this.fileDataSubscription = this.http.post('/api/v1/files', JSON.stringify(this.uploadedFilesIds.filter(Boolean)))
-        .map(res => res.json())
+
         .subscribe(
-          filesData => this.uploadedFiles = filesData,
+          (filesData:FileData[]) => this.uploadedFiles = filesData,
           error => console.log(error)
         )
     }

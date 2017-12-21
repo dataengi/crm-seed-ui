@@ -65,14 +65,14 @@ export class GroupsComponent implements OnInit {
       if (this.newGroupName.trim() && !exists) {
 
         this.contactsService.updateGroup(new UpdateGroupData(this.newGroupName, id)).subscribe(
-          ok => {
+          ()=> {
             this.enableEditGroup = false;
             this.activeGroup = '';
             this.editGroupEvent.emit(new Group(this.newGroupName, id));
             this.notificationsService.success('Group updated')
           },
           error => {
-            this.notificationsService.error(error.json())
+            this.notificationsService.error(error.error)
           }
         );
       } else {
@@ -83,13 +83,13 @@ export class GroupsComponent implements OnInit {
 
   deleteGroup(id: number) {
     this.confirmDialogService.ask('You really want delete group?', 'Delete', 'Delete group confirmation').then(
-      confirm => {
+      ()=> {
         this.contactsService.deleteGroup(id).subscribe(
-          ok => {
+          ()=> {
             this.deleteGroupEvent.emit(id);
             this.notificationsService.success('Group deleted')
           },
-          error => this.notificationsService.error(error.json())
+          error => this.notificationsService.error(error.error)
         );
       },
       cancel => console.debug('Canceled')

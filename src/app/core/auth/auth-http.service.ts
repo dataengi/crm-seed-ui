@@ -1,52 +1,45 @@
 import {Injectable} from "@angular/core";
 import {AuthService} from "./auth.service";
-import {Http, RequestOptionsArgs, Response, ResponseContentType} from "@angular/http";
+import {ResponseContentType} from "@angular/http";
 import {Observable} from "rxjs";
 import 'rxjs/add/operator/map';
+import {HttpClient, HttpErrorResponse,HttpResponse} from "@angular/common/http";
 
 @Injectable()
 export class AuthHttp {
 
-  constructor(private authService: AuthService, private http: Http) {
+  constructor(private authService: AuthService, private http: HttpClient) {
   }
 
-  public get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.http.get(url, options).catch(error => this.processError(error));
+  public get<T>(url: string, options?:any): Observable<T> {
+    return this.http.get<T>(url, options).catch(error => this.processError(error));
   }
 
-  public post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.http.post(url, body, options).catch(error => this.processError(error));
+  public post<T>(url: string, body: any, options?: any): Observable<T> {
+    return this.http.post<T>(url, body, options).catch(error => this.processError(error));
   }
 
-  public put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.http.put(url, body, options).catch(error => this.processError(error));
+  public put<T>(url: string, body: any, options?: any): Observable<T>{
+    return this.http.put<T>(url, body, options).catch(error => this.processError(error));
   }
 
-  public delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.http.delete(url, options).catch(error => this.processError(error));
+  public delete<T>(url: string, options?: any): Observable<T>{
+    return this.http.delete<T>(url, options).catch(error => this.processError(error));
   }
 
-  public patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.http.patch(url, body, options).catch(error => this.processError(error));
+  public head<T>(url: string, options?: any): Observable<T> {
+    return this.head<T>(url, options).catch(error => this.processError(error));
   }
 
-  public head(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.head(url, options).catch(error => this.processError(error));
+  public options<T>(url: string, options?: any): Observable<T>{
+    return this.options<T>(url, options).catch(error => this.processError(error));
   }
 
-  public options(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.options(url, options).catch(error => this.processError(error));
+  public download<T>(url: string):Observable<T>{
+    return this.get<T>(url, {responseType: "blob"})
   }
 
-  public download(url: string) {
-    return this.get(url, {responseType: ResponseContentType.Blob})
-  }
-
-  public downloadPost(url: string, body: any) {
-    return this.post(url, body, {responseType: ResponseContentType.Blob})
-  }
-
-  private processError(response: Response) {
+  private processError(response: HttpErrorResponse) {
     this.authService.processUnauthorized(response);
     return Observable.throw(response);
   }

@@ -52,7 +52,10 @@ export class InvitesComponent implements OnInit, OnDestroy {
 
   createCompany() {
     const modalRef = this.modalService.open(CreateCompanyComponent);
-    modalRef.componentInstance.newCompany.subscribe((company: Company) => this.companies.push(company));
+    modalRef.result.then((company: Company)=>{
+      this.companies.push(company);
+      modalRef.close();
+    });
   }
 
   onSubmit() {
@@ -62,7 +65,6 @@ export class InvitesComponent implements OnInit, OnDestroy {
     formValue.companyId = parseInt(this.inviteForm.value.companyId);
     this.initForm();
     this.createInviteSubscription = this.invitesService.createInvite(formValue)
-      .map(resp => resp.json())
       .subscribe(
         (ok: Invite) => {
           ok.company = this.getCompaniesById()[ok.companyId];
@@ -71,7 +73,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
           this.spinner.hide();
         },
         error => {
-          this.notifications.error(error.json());
+          this.notifications.error(error.error);
           this.spinner.hide();
         }
       )
@@ -85,28 +87,26 @@ export class InvitesComponent implements OnInit, OnDestroy {
     this.setIsAllowCreateCompany();
     this.initForm();
 
-    this.userStateSubscription = this.authService.userState.subscribe(user => {
-      if (this.isAllowCreateCompany !== this.ps.isAllow(Actions.CreateCompany)) {
-        this.setIsAllowCreateCompany();
-        this.initForm();
-      }
+    this.userStateSubscription = this.authService.userState.subscribe(
+      () => {
+        if (this.isAllowCreateCompany !== this.ps.isAllow(Actions.CreateCompany)) {
+          this.setIsAllowCreateCompany();
+          this.initForm();
+        }
     });
 
     this.subscribeInvites();
 
     this.rolesSubscription = this.invitesService.getRoles().subscribe(
-      roles => this.roles = roles,
+      (roles:Role[]) => this.roles = roles,
       error => console.log(error)
     );
   }
 
   subscribeInvites() {
-    console.log("isAllowCreateCompany " + this.isAllowCreateCompany);
-
-    this.invitesSubscription = (this.isAllowCreateCompany ? this.invitesService.getInvites() :
-      this.invitesService.getInvitesByCompany())
+    this.invitesSubscription = this.invitesService.getInvites()
       .subscribe(
-        invites => {
+        (invites: Invite[]) => {
           if (this.isAllowCreateCompany) {
             this.subscribeCompanies(() => this.decorateInvitesWithCompany(invites));
           } else {
@@ -131,7 +131,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
 
   subscribeCompanies(onDone: () => any) {
     this.companiesSubscription = this.invitesService.getCompanies().subscribe(
-      companies => {
+      (companies:Company[]) => {
         this.companies = companies;
         onDone();
       },
