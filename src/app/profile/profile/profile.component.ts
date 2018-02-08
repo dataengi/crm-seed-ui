@@ -14,11 +14,9 @@ import {KeycloakProfile} from "keycloak-js";
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit, OnDestroy {
+export class ProfileComponent implements OnInit {
 
   profileForm: FormGroup;
-  profileStateSubscription: Subscription;
-  changeAvatarSubscription: Subscription;
   profile: KeycloakProfile;
 
   constructor(private profileService: ProfileService,
@@ -30,13 +28,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.profile = this.profileService.ksp;
     this.initForm(this.profile);
-  }
-
-  ngOnDestroy() {
-    this.profileStateSubscription.unsubscribe();
-    if (this.changeAvatarSubscription) {
-      this.changeAvatarSubscription.unsubscribe();
-    }
   }
 
   saveProfile() {
@@ -70,7 +61,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const options: NgbModalOptions = {size: 'lg'};
     const modalRef = this.modalService.open(ImgCropeUploadComponent, options);
     modalRef.componentInstance.currentImgUrl = this.profileForm.value.avatarUrl;
-    this.changeAvatarSubscription = modalRef.componentInstance.imageChange.subscribe(url => this.profileForm.patchValue({avatarUrl: url}));
   }
 
   private fillNick(nick: string) {

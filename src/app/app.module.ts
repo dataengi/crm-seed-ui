@@ -24,8 +24,6 @@ import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {initializer} from "./core/keycloak/app-init";
 
-const LocationStrategyProvider = {provide: LocationStrategy, useClass: HashLocationStrategy};
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -54,7 +52,6 @@ const LocationStrategyProvider = {provide: LocationStrategy, useClass: HashLocat
     HeaderComponent,
   ],
   providers: [
-    LocationStrategyProvider,
     MainLayoutService
   ],
   bootstrap: [AppComponent]
