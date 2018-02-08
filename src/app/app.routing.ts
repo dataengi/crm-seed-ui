@@ -41,16 +41,16 @@ export const routes: Routes = [
       }
     ]
   },
-  {
-    path: 'auth', component: EmptyLayoutComponent, data: {title: 'Auth'},
-    children: [
-      {
-        path: '',
-        loadChildren: './auth/auth.module#AuthModule',
-        data: {title: 'Auth'}
-      },
-    ]
-  },
+  // {
+  //   path: 'auth', component: EmptyLayoutComponent, data: {title: 'Auth'},
+  //   children: [
+  //     {
+  //       path: '',
+  //       loadChildren: './auth/auth.module#AuthModule',
+  //       data: {title: 'Auth'}
+  //     },
+  //   ]
+  // },
   {
     path: '**', component: PageNotFoundComponent
   }

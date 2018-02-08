@@ -6,6 +6,7 @@ import {AuthHttp} from "../auth/auth-http.service";
 import {User} from "../models/auth/user.model";
 import {Profile} from "../models/profile/profile.model";
 import {HttpResponse} from "@angular/common/http";
+import {KeycloakService} from "keycloak-angular";
 
 
 @Injectable()
@@ -13,15 +14,19 @@ export class ProfileService {
 
   getProfileSubscription: Subscription;
 
+  public ksp;
   private profile: Profile = new EmptyProfile(this.authService.getUser());
   private profileSubject = new Subject<Profile>();
   profileState = this.profileSubject.asObservable();
 
-  constructor(private authService: AuthService, private http: AuthHttp) {
-    if (authService.isLoggedIn()) {
-      this.updateLocalProfile(authService.getUser());
-    }
-    this.authService.userState.subscribe(user => this.updateLocalProfile(user))
+  constructor(private authService: AuthService, private http: AuthHttp, private ks: KeycloakService) {
+    ks.loadUserProfile()
+      .then(
+        (response)=>{
+          console.log('Into Service', response);
+          this.ksp = response
+        }
+      )
   }
 
   updateProfile(profile: UpdateProfileData) {

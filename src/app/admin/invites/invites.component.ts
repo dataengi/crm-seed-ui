@@ -30,7 +30,6 @@ export class InvitesComponent implements OnInit, OnDestroy {
   private createInviteSubscription: Subscription;
   private rolesSubscription: Subscription;
   private companiesSubscription: Subscription;
-  private userStateSubscription: Subscription;
   isAllowCreateCompany: boolean = false;
 
   roles: Role[] = [];
@@ -86,14 +85,6 @@ export class InvitesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.setIsAllowCreateCompany();
     this.initForm();
-
-    this.userStateSubscription = this.authService.userState.subscribe(
-      () => {
-        if (this.isAllowCreateCompany !== this.ps.isAllow(Actions.CreateCompany)) {
-          this.setIsAllowCreateCompany();
-          this.initForm();
-        }
-    });
 
     this.subscribeInvites();
 

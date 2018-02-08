@@ -21,14 +21,14 @@ export class StartResetComponent implements OnInit {
   }
 
   onSubmit() {
-    const email = this.startResetForm.value['email'];
-    this.authService.startResetPassword(email).subscribe(
-      ()=> {
-        this.notificationsService.success('Please, check your email for password reset instructions');
-        this.router.navigate(['/auth', 'signIn']).then()
-      },
-      error => this.notificationsService.error(error)
-    );
+    // const email = this.startResetForm.value['email'];
+    // this.authService.startResetPassword(email).subscribe(
+    //   ()=> {
+    //     this.notificationsService.success('Please, check your email for password reset instructions');
+    //     this.router.navigate(['/auth', 'signIn']).then()
+    //   },
+    //   error => this.notificationsService.error(error)
+    // );
   }
 
   ngOnInit() {

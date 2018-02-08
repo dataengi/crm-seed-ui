@@ -7,7 +7,8 @@ import {NotificationsService} from "../../core/notifications/notifications.servi
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {ImgCropeUploadComponent} from "../../shared/components/img-crope-upload/img-crope-upload.component";
 import {Profile} from "../../core/models/profile/profile.model";
-
+import {KeycloakService} from "keycloak-angular";
+import {KeycloakProfile} from "keycloak-js";
 @Component({
   selector: 'crm-profile',
   templateUrl: './profile.component.html',
@@ -18,10 +19,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
   profileStateSubscription: Subscription;
   changeAvatarSubscription: Subscription;
-  profile: Profile;
-
-
-  advertiserInfo: any; //todo remove
+  profile: KeycloakProfile;
 
   constructor(private profileService: ProfileService,
               private formBuilder: FormBuilder,
@@ -30,12 +28,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.profile = this.profileService.getLocalProfile();
+    this.profile = this.profileService.ksp;
     this.initForm(this.profile);
-    this.profileStateSubscription = this.profileService.profileState.subscribe(profile => {
-      this.profile = profile;
-      this.initForm(profile)
-    });
   }
 
   ngOnDestroy() {
@@ -52,18 +46,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
     )
   }
 
-  private initForm(profile: Profile) {
+  private initForm(profile: KeycloakProfile) {
     this.profileForm = this.formBuilder.group({
-      nickname: [this.fillNick(profile.nickname), [Validators.required, CRMValidators.leterOrDigitsOnly], [this.nicknameValidator.bind(this)]],
+      userName: [this.fillNick(profile.username), [Validators.required, CRMValidators.leterOrDigitsOnly], [this.nicknameValidator.bind(this)]],
       firstName: [profile.firstName, [Validators.maxLength(40)]],
       lastName: [profile.lastName, [Validators.maxLength(40)]],
-      avatarUrl: [profile.avatarUrl]
+      avatarUrl: ['/assets/img/avatars/no-avatar.png']
     })
 
   }
 
   private nicknameValidator(control: FormControl): Observable<any> {
-    if (control.value === this.profileService.getLocalProfile().nickname) {
+    if (control.value === this.profileService.ksp.username) {
       return Observable.of(null)
     } else {
       return this.profileService.checkNickname(control.value)

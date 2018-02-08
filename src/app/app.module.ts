@@ -1,4 +1,4 @@
-import {NgModule} from "@angular/core";
+import {APP_INITIALIZER, NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {LocationStrategy, HashLocationStrategy} from "@angular/common";
 import {AppComponent} from "./app.component";
@@ -21,14 +21,15 @@ import {AsideToggleDirective} from "./layouts/layouts-utils/aside.directive";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {TooltipModule} from "ngx-bootstrap/tooltip";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
-
-
+import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
+import {initializer} from "./core/keycloak/app-init";
 
 const LocationStrategyProvider = {provide: LocationStrategy, useClass: HashLocationStrategy};
 
 @NgModule({
   imports: [
     BrowserModule,
+    KeycloakAngularModule,
     NgbModule.forRoot(),
     AppRoutingModule,
     BsDropdownModule.forRoot(),

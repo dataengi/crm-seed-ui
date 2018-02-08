@@ -17,10 +17,6 @@ export class CompanyProfilesService{
               private authService: AuthService,
               private profileService: ProfileService) {
 
-    //TODO: Remove this logic. Its hard to understand;
-    if (authService.isLoggedIn()) {
-      this.setProfilesSubscription = this.setProfiles().subscribe();
-    }
 
     profileService.profileState.subscribe(()=> {
       if (this.setProfilesSubscription) {

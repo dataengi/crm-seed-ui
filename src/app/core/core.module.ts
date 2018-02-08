@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule} from "@angular/core";
+import {APP_INITIALIZER, ModuleWithProviders, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {SpinnerComponent} from "./spinner/spinner.component";
 import {SpinnerService} from "./spinner/spinner.service";
@@ -13,10 +13,10 @@ import {CompanyProfilesService} from "./profile/company-profiles.service";
 import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {ConfirmDialogService} from "./confirm-dialog/confirm-dialog.service";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {MyInterceptor} from "./auth/auth.interceptor";
+import { HttpClientModule} from "@angular/common/http";
+import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
+import {initializer} from "./keycloak/app-init";
 
-const RequestOptionsProviderClient = {provide: HTTP_INTERCEPTORS, useClass: MyInterceptor, multi:true};
 
 const RoutesGuards = [
   LoggedInOnly,
@@ -24,11 +24,19 @@ const RoutesGuards = [
   CompaniesManagementGuard
 ];
 
+const InitKeyCloakProvider = {
+  provide: APP_INITIALIZER,
+  useFactory: initializer,
+  multi: true,
+  deps: [KeycloakService]
+};
+
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
-    ModalModule
+    ModalModule,
+    KeycloakAngularModule,
   ],
   exports: [
     SpinnerComponent,
@@ -47,7 +55,6 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
-        RequestOptionsProviderClient,
         SpinnerService,
         NotificationsService,
         AuthService,
@@ -57,6 +64,7 @@ export class CoreModule {
         ProfileService,
         CompanyProfilesService,
         ConfirmDialogService,
+        InitKeyCloakProvider
       ]
     }
   }

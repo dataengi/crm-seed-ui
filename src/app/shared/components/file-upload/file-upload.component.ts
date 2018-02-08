@@ -13,7 +13,7 @@ import * as FileSaver from "file-saver";
 })
 export class FileUploadComponent implements OnInit, OnChanges, OnDestroy {
 
-  constructor(private authService: AuthService, private http: AuthHttp) {
+  constructor(private http: AuthHttp) {
   }
 
   @Input() tag: string;
@@ -87,7 +87,7 @@ export class FileUploadComponent implements OnInit, OnChanges, OnDestroy {
       url: '/api/v1/files/' + this.tag,
       maxFileSize: this.maxFileSize,
       queueLimit: this.limit,
-      headers: [{name: this.authService.getHeaderName(), value: this.authService.getToken()}]
+      headers: []
     };
     this.fileUploader = new FileUploader(options);
     this.fileUploader.onCompleteItem = (item: any, response: string, status: number, headers: ParsedResponseHeaders) => {

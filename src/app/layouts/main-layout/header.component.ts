@@ -5,6 +5,8 @@ import {ProfileService} from "../../core/profile/profile.service";
 import {Router} from "@angular/router";
 import {NotificationsService} from "../../core/notifications/notifications.service";
 import {Profile} from "../../core/models/profile/profile.model";
+import { KeycloakProfile} from 'keycloak-js'
+import {KeycloakService} from "keycloak-angular";
 
 @Component({
   selector: 'crm-header',
@@ -14,6 +16,7 @@ import {Profile} from "../../core/models/profile/profile.model";
 export class HeaderComponent implements OnInit, OnDestroy {
 
   profile: Profile;
+  profileFromKeyCloak: KeycloakProfile;
   private profileStateSubscription: Subscription;
 
   private subscription: Subscription;
@@ -21,15 +24,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService,
               private profileService: ProfileService,
               private router: Router,
+              private ks: KeycloakService,
               private notificationsService: NotificationsService) {
   }
 
   ngOnInit() {
-    this.profile = this.profileService.getLocalProfile();
-    this.profileStateSubscription = this.profileService.profileState.subscribe(profile => this.profile = profile);
+    this.profileFromKeyCloak = this.profileService.ksp;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(){
     this.profileStateSubscription.unsubscribe();
     if (typeof this.subscription !== 'undefined') {
       this.subscription.unsubscribe();
@@ -37,9 +40,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.subscription = this.authService.signOut().subscribe(
-      ok => this.router.navigate(['/auth']),
-      error => this.notificationsService.error(error)
-    )
+    this.authService.signOut();
   }
 }
