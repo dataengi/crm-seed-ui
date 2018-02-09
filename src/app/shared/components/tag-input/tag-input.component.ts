@@ -37,16 +37,6 @@ export class TagInputComponent implements OnInit, OnChanges {
     }
   }
 
-  ngAfterViewInit() {
-    // If the user passes an undefined variable to items this will warn
-    // and set the value to an empty array
-    if (!this.tagsList) {
-      console.warn('TagInputComponent was passed an undefined value in items. Please make sure the variable is defined.');
-      this.tagsList = [];
-      this.onChange(this.tagsList);
-    }
-  }
-
   inputChanged(event) {
     let key = event.keyCode;
     switch (key) {
@@ -69,12 +59,7 @@ export class TagInputComponent implements OnInit, OnChanges {
     }
   }
 
-  inputBlurred(event) {
-    this.addOnBlur && this._addTags([this.inputValue]);
-    this.isFocussed = false;
-  }
-
-  inputFocused(event) {
+  inputFocused() {
     this.isFocussed = true;
   }
 
@@ -86,12 +71,6 @@ export class TagInputComponent implements OnInit, OnChanges {
     let filteredTagsToAdd = this.uniqueTags(tagsToAdd);
     this._addTags(filteredTagsToAdd);
     setTimeout(() => this.inputValue = '', 50);
-  }
-
-  private _splitString(tagString: string) {
-    tagString = tagString.trim();
-    let tags = tagString.split(String.fromCharCode(this.delimiter));
-    return tags.filter((tag) => !!tag);
   }
 
   private splitPasteString(tagString: string) {
@@ -149,20 +128,6 @@ export class TagInputComponent implements OnInit, OnChanges {
   onChange: (value) => any = () => {
     this.itemsChange.emit(this.tagsList);
   };
-
-  onTouched: () => any = () => {
-  };
-
-  writeValue(value: any) {
-  }
-
-  registerOnChange(fn: any) {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any) {
-    this.onTouched = fn;
-  }
 
   isValid() {
     return this.inputValue && !this._isTagValid(this.inputValue);

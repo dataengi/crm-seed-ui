@@ -1,6 +1,5 @@
 import {Profile} from "../models/profile/profile.model";
 import {User} from "../models/auth/user.model";
-import {ShortProfile} from "../models/profile/short-profile.model";
 
 export interface UpdateProfileData {
   nickname: string;
@@ -15,12 +14,7 @@ export class EmptyProfile implements Profile {
   lastName = '';
   avatarUrl = '/assets/img/avatars/no-avatar.png';
 
-  constructor(public user: User) {
-  }
-
-  toShort() {
-    return new ShortProfile(this.nickname, this.avatarUrl)
-  }
+  constructor(public user: User) {}
 }
 
 export class ProfileImpl implements Profile {

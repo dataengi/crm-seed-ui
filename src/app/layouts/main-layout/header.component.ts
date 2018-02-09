@@ -16,7 +16,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   profile: Profile;
   private profileStateSubscription: Subscription;
 
-  private isOpen = false;
   private subscription: Subscription;
 
   constructor(private authService: AuthService,
@@ -40,7 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout() {
     this.subscription = this.authService.signOut().subscribe(
       ok => this.router.navigate(['/auth']),
-      error => this.notificationsService.error(error.json().message)
+      error => this.notificationsService.error(error)
     )
   }
 }

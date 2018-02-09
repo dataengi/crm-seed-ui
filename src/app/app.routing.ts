@@ -36,7 +36,7 @@ export const routes: Routes = [
       {
         path: 'root',
         loadChildren: './root/root.module#RootModule',
-        canActivate: [CompaniesManagementGuard],
+        canActivate: [LoggedInOnly],
         data: {title: 'Global Admin'},
       }
     ]

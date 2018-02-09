@@ -71,7 +71,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
         this.groups = book.groups;
         this.contactsBookId = book.id;
       },
-      error => this.notificationsService.error(error.json())
+      error => this.notificationsService.error(error)
     );
 
   }
@@ -119,13 +119,13 @@ export class ContactsComponent implements OnInit, OnDestroy {
   deleteContact(contact: Contact, event: Event) {
     event.stopPropagation();
     this.confirmDialogService.ask('You really want delete contact?', 'Delete', 'Delete contact confirmation').then(
-      confirm => {
+      ()=> {
         this.contactsService.deleteContact(contact.id).subscribe(
-          ok => {
+          ()=> {
             this.contacts.splice(this.contacts.indexOf(contact), 1);
             this.notificationsService.success('Contact deleted');
           },
-          error => this.notificationsService.error(error.json())
+          error => this.notificationsService.error(error.error)
         )
       },
       cancel => console.debug('Cancel')
@@ -179,9 +179,9 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
   onDeleteSelectedContacts() {
     this.confirmDialogService.ask('You really want delete contacts?', 'Delete', 'Delete contacts confirmation').then(
-      confirm => {
+      ()=> {
         this.contactsService.deleteContacts(new RemoveContactsData(this.selectedContactsIds)).subscribe(
-          ok => {
+          ()=> {
             this.selectedContactsIds.forEach(id => {
               let contact = this.contacts.find(c => c.id === id);
               this.contacts.splice(this.contacts.indexOf(contact), 1);
@@ -190,7 +190,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
             this.notificationsService.success('Contacts deleted');
           },
           error => {
-            this.notificationsService.error(error.json())
+            this.notificationsService.error(error.error)
           }
         );
       },
@@ -211,7 +211,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
   addSelectedToGroup(groupId: number) {
     this.contactsService.addContactsToGroup(new AddContactsToGroupData(groupId, this.selectedContactsIds)).subscribe(
-      ok => {
+      ()=> {
         const group = this.groups.find(g => g.id === groupId);
         this.contacts.forEach(contact => {
           if (this.selectedContactsIds.indexOf(contact.id) !== -1) {
@@ -222,7 +222,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
         this.notificationsService.success('Contacts added to group');
       },
       error => {
-        this.notificationsService.error(error.json())
+        this.notificationsService.error(error.error)
       }
     )
   }
@@ -239,15 +239,16 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
   onRemoveContactFromGroup(contact: Contact, event: Event) {
     event.stopPropagation();
-    this.contactsService.deleteContactFromGroup(new RemoveContactsFromGroupData(this.selectedGroup.id, [contact.id])).subscribe(
-      ok => {
-        this.contacts[this.contacts.indexOf(contact)].groups.splice(contact.groups.indexOf(this.selectedGroup), 1);
-        this.notificationsService.success('Contact removed from group');
-      },
-      error => {
-        this.notificationsService.error(error.json())
-      }
-    )
+    this.contactsService.deleteContactFromGroup(new RemoveContactsFromGroupData(this.selectedGroup.id, [contact.id]))
+      .subscribe(
+        ()=> {
+          this.contacts[this.contacts.indexOf(contact)].groups.splice(contact.groups.indexOf(this.selectedGroup), 1);
+          this.notificationsService.success('Contact removed from group');
+          },
+          error => {
+          this.notificationsService.error(error.error)
+        }
+      )
   }
 
   caretClass() {

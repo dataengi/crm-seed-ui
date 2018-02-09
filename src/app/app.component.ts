@@ -1,5 +1,4 @@
 import {Component} from "@angular/core";
-import {CompanyProfilesService} from "./core/profile/company-profiles.service";
 
 @Component({
   selector: 'body',
@@ -9,6 +8,6 @@ import {CompanyProfilesService} from "./core/profile/company-profiles.service";
     `
 })
 export class AppComponent {
-  constructor(private companyProfilesService: CompanyProfilesService) {
+  constructor() {
   }
 }
