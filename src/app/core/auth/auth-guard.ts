@@ -11,9 +11,9 @@ export class LoggedInOnly extends KeycloakAuthGuard{
     super(router, keycloakAngular);
   }
   isAccessAllowed(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    console.log('Is Auth', this.authenticated);
     return new Promise(async (resolve, reject) => {
       if (!this.authenticated) {
-        console.log('Is Auth', this.authenticated);
         this.keycloakAngular.login();
         return
       }
