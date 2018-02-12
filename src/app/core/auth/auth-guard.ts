@@ -1,23 +1,43 @@
 import {Injectable} from "@angular/core";
-import {CanActivate, Router} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import {AuthService} from "./auth.service";
 import {PermissionsService} from "./permissions.service";
 import {Actions} from "../models/auth/action.type";
+import {KeycloakAuthGuard, KeycloakService} from "keycloak-angular";
 
 @Injectable()
-export class LoggedInOnly implements CanActivate {
-
-  constructor(private authService: AuthService, private router: Router) {
-  };
-
-  canActivate() {
-    if (this.authService.isLoggedIn()) {
-      return true;
-    } else {
-      this.router.navigate(['/auth', 'signIn']);
-      return false
-    }
+export class LoggedInOnly extends KeycloakAuthGuard{
+  constructor(protected router: Router, protected keycloakAngular: KeycloakService) {
+    super(router, keycloakAngular);
   }
+  isAccessAllowed(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      if (!this.authenticated) {
+        console.log('Is Auth', this.authenticated);
+        this.keycloakAngular.login();
+        return
+      }
+
+      const requiredRoles = route.data.roles;
+      if (!requiredRoles || requiredRoles.length === 0) {
+        return resolve(true);
+      } else {
+        if (!this.roles || this.roles.length === 0) {
+          resolve(false);
+        }
+        let granted: boolean = false;
+        for (const requiredRole of requiredRoles) {
+          if (this.roles.indexOf(requiredRole) > -1) {
+            granted = true;
+            break;
+          }
+        }
+        resolve(granted);
+      }
+
+    });
+  }
+
 }
 
 @Injectable()

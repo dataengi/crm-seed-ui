@@ -19,10 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(private authService: AuthService,
-              private profileService: ProfileService,
-              private router: Router,
-              private notificationsService: NotificationsService) {
-  }
+              private profileService: ProfileService){}
 
   ngOnInit() {
     this.profile = this.profileService.getLocalProfile();
@@ -37,9 +34,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.subscription = this.authService.signOut().subscribe(
-      ok => this.router.navigate(['/auth']),
-      error => this.notificationsService.error(error)
-    )
+   this.authService.signOut()
   }
 }

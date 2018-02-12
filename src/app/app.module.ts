@@ -21,14 +21,12 @@ import {AsideToggleDirective} from "./layouts/layouts-utils/aside.directive";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {TooltipModule} from "ngx-bootstrap/tooltip";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
-
-
-
-const LocationStrategyProvider = {provide: LocationStrategy, useClass: HashLocationStrategy};
+import {KeycloakAngularModule} from "keycloak-angular";
 
 @NgModule({
   imports: [
     BrowserModule,
+    KeycloakAngularModule,
     NgbModule.forRoot(),
     AppRoutingModule,
     BsDropdownModule.forRoot(),
@@ -50,10 +48,9 @@ const LocationStrategyProvider = {provide: LocationStrategy, useClass: HashLocat
     DropdownDirective,
     AsideComponent,
     PageNotFoundComponent,
-    HeaderComponent,
+    HeaderComponent
   ],
   providers: [
-    LocationStrategyProvider,
     MainLayoutService
   ],
   bootstrap: [AppComponent]

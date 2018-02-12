@@ -7,6 +7,7 @@ import {PermissionsService} from "./permissions.service";
 import {User, EmptyUser} from "../models/auth/user.model";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import {KeycloakService} from "keycloak-angular";
 
 @Injectable()
 export class AuthService {
@@ -21,13 +22,15 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router,
               private notificationsService: NotificationsService,
+              private keycloakService: KeycloakService,
               private permissionsService: PermissionsService) {
-
-    this.loggedIn = !!localStorage.getItem(this.authTokenKey);
-    if (this.loggedIn) {
-      this.setUser()
-    }
-
+       keycloakService.isLoggedIn()
+         .then(
+           (res: boolean)=>{
+             this.loggedIn = res || true;
+             this.setUser();
+           }
+         );
   }
 
   signIn(email: string, password: string, rememberMe: boolean = false) {
@@ -57,17 +60,7 @@ export class AuthService {
   }
 
   signOut() {
-    return this.http.post('/auth/api/v1/authentication/signOut', {})
-      .map(() => {
-        localStorage.removeItem(this.authTokenKey);
-        this.loggedIn = false;
-      })
-      .catch((error:HttpErrorResponse) => {
-        if (error.status === 401) {
-          this.cleanToken()
-        }
-        return Observable.throw(error);
-      })
+    this.keycloakService.logout('http://localhost:4200')
   }
 
   startResetPassword(email: string) {
@@ -111,9 +104,6 @@ export class AuthService {
           this.userChanged();
         },
         (error:HttpErrorResponse) => {
-          if (error.status === 401) {
-            this.cleanToken()
-          }
           console.error(error.error);
         }
       )
@@ -126,7 +116,6 @@ export class AuthService {
   processUnauthorized(response: HttpErrorResponse): void {
     console.log('Process unauthorized', response);
     if (response.status === 401) {
-      this.cleanToken();
       this.notificationsService.error(response.error)
     }
   }
@@ -135,13 +124,6 @@ export class AuthService {
     this.processUnauthorized(response);
     console.log('process error', response);
     return Observable.throw(response);
-  }
-
-  private cleanToken() {
-    localStorage.removeItem(this.authTokenKey);
-    this.loggedIn = false;
-    this.router.navigate(['/auth'])
-      .catch(()=>console.log('Error during redirect to auth'))
   }
 
   private userChanged() {
