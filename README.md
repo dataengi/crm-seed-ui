@@ -40,7 +40,7 @@ Contacts panel contains:
 
 ## Running in presentation mode
 
-Go to Server project for instructions ([link](https://gitlab.com/wt-t/crm)). 
+Go to Server project for instructions ([link](https://github.com/dataengi/crm-seed)). 
 
 ## Running in dev mode
 
