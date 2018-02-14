@@ -35,7 +35,8 @@ const keycloakProvider = {
   imports: [
     CommonModule,
     HttpClientModule,
-    ModalModule
+    ModalModule,
+    KeycloakAngularModule
   ],
   exports: [
     SpinnerComponent,

@@ -10,7 +10,7 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
             realm: 'master',
             clientId: 'testClient',
             credentials: {
-              secret: '9f6d356a-e31a-4a4a-8197-452d22c731c0'
+              secret: '2cb5ad07-829d-4606-a5a9-2347b3fb3a54'
             }
           },
           initOptions: {

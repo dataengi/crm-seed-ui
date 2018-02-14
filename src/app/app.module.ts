@@ -23,10 +23,11 @@ import {TooltipModule} from "ngx-bootstrap/tooltip";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {KeycloakAngularModule} from "keycloak-angular";
 
+const LocationStrategyProvider = {provide: LocationStrategy, useClass: HashLocationStrategy};
+
 @NgModule({
   imports: [
     BrowserModule,
-    KeycloakAngularModule,
     NgbModule.forRoot(),
     AppRoutingModule,
     BsDropdownModule.forRoot(),
@@ -51,7 +52,8 @@ import {KeycloakAngularModule} from "keycloak-angular";
     HeaderComponent
   ],
   providers: [
-    MainLayoutService
+    MainLayoutService,
+    LocationStrategyProvider
   ],
   bootstrap: [AppComponent]
 })
