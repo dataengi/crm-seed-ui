@@ -52,8 +52,7 @@ const LocationStrategyProvider = {provide: LocationStrategy, useClass: HashLocat
     HeaderComponent
   ],
   providers: [
-    MainLayoutService,
-    LocationStrategyProvider
+    MainLayoutService
   ],
   bootstrap: [AppComponent]
 })

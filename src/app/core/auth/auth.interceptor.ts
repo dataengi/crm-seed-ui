@@ -12,11 +12,8 @@ export class MyInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
 
-   const authTokenKey = 'xZaSwqS';
-   const token = localStorage.getItem(authTokenKey) || '';
-   const authHeaders = req.clone({headers: req.headers.set("X-Auth-Token", token)});
-   const contentHeaders = authHeaders.clone({headers: authHeaders.headers.set('Content-Type', 'application/json')});
+   const authHeaders = req.clone({headers: req.headers.set('Content-Type', 'application/json')});
 
-   return next.handle(contentHeaders)
+   return next.handle(authHeaders)
   }
 }

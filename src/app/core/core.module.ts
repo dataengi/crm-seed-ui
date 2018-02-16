@@ -13,15 +13,19 @@ import {CompanyProfilesService} from "./profile/company-profiles.service";
 import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {ConfirmDialogService} from "./confirm-dialog/confirm-dialog.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {initializer} from "./keycloak/app-init.service";
+import {MyInterceptor} from "./auth/auth.interceptor";
 
 const RoutesGuards = [
   LoggedInOnly,
   LoggedOutOnly,
   CompaniesManagementGuard
 ];
+
+const RequestOptionsProviderClient = {provide: HTTP_INTERCEPTORS, useClass: MyInterceptor, multi:true};
+
 
 const keycloakProvider = {
   provide: APP_INITIALIZER,
@@ -55,6 +59,7 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
+        RequestOptionsProviderClient,
         SpinnerService,
         NotificationsService,
         AuthService,
