@@ -24,9 +24,6 @@ const RoutesGuards = [
   CompaniesManagementGuard
 ];
 
-const RequestOptionsProviderClient = {provide: HTTP_INTERCEPTORS, useClass: MyInterceptor, multi:true};
-
-
 const keycloakProvider = {
   provide: APP_INITIALIZER,
   useFactory: initializer,
@@ -59,7 +56,6 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
-        RequestOptionsProviderClient,
         SpinnerService,
         NotificationsService,
         AuthService,
