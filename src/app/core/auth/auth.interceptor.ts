@@ -11,9 +11,7 @@ export class MyInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-
    const authHeaders = req.clone({headers: req.headers.set('Content-Type', 'application/json')});
-
    return next.handle(authHeaders)
   }
 }

@@ -2,11 +2,11 @@ import {KeycloakOptions} from "keycloak-angular";
 
 export const keycloakEnv:KeycloakOptions = {
     config: {
-      url: 'http://localhost:8080/auth/',
-      realm: 'master',
-      clientId: 'testClient',
+      url: 'URL', //Keycloak URL http://example.com/auth/
+      realm: 'REALM',
+      clientId: 'CLIENT_ID',
       credentials: {
-        secret: '2cb5ad07-829d-4606-a5a9-2347b3fb3a54'
+        secret: 'SECRET'
       }
     },
     initOptions: {
