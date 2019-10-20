@@ -30,6 +30,7 @@
                      class="form-control form-control-modal"
                      placeholder="Full name"
                      formControlName="name"
+                     (focusout)="trimInputValue(contactForm.controls.name)"
                      *ngIf="isForm()">
 
               <crm-form-error [control]="contactForm.controls.name"
