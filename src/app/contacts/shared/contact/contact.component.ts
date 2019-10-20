@@ -1,5 +1,5 @@
 import {Component, OnInit, OnDestroy, Input, Output, EventEmitter} from "@angular/core";
-import {FormBuilder, FormGroup, Validators, FormArray} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators, FormArray, AbstractControl} from '@angular/forms';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ContactService} from "./contact.service";
 import {GroupSelectItem} from "../../contacts.data";
@@ -264,4 +264,8 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   fieldTooLongError = {name: 'maxlength', message: 'Too long'}
+
+  private trimInputValue(name: AbstractControl): void {
+    name.setValue(name.value.trim());
+  }
 }
